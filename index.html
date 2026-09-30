@@ -335,14 +335,37 @@
         <h2 id="skills-h">Skills</h2>
         <span class="sec-ar" lang="ar">المهارات</span>
       </div>
-      <div class="skills">
-        <div class="skill"><h3>LLM &amp; GenAI</h3><p>RAG / CRAG · LangGraph · LangChain · agentic workflows · LLM-as-judge · human-in-the-loop · Trustcall memory · prompt engineering · LLM evaluation</p></div>
-        <div class="skill"><h3>Vector search &amp; NLP</h3><p>pgvector · Qdrant · ChromaDB · Pinecone · embeddings · semantic chunking · Hugging Face · NLTK · Arabic &amp; English NLP</p></div>
-        <div class="skill"><h3>Backend</h3><p>Python · FastAPI · Pydantic v2 · PostgreSQL · SQLAlchemy 2 async · Alembic · MongoDB / Motor · REST APIs · clean architecture</p></div>
-        <div class="skill"><h3>MLOps &amp; infrastructure</h3><p>Docker Compose · nginx · Prometheus · Grafana · structlog · GitHub Actions · pytest · Locust · uv</p></div>
-        <div class="skill"><h3>Models &amp; ML</h3><p>Groq (Llama 3.3, gpt-oss) · OpenAI-compatible APIs · Stable Diffusion fine-tuning · PyTorch · TensorFlow · scikit-learn · NumPy · Pandas · Gradio</p></div>
-        <div class="skill"><h3>Languages</h3><p>Arabic, native · English, full professional (IELTS 8.0) · German, professional working</p></div>
+      <div class="core-stack">
+        <span class="core-label">Core stack</span>
+        <ul><li>Python</li><li>LangGraph</li><li>RAG</li><li>FastAPI</li><li>PostgreSQL + pgvector</li><li>Docker</li><li>Prometheus + Grafana</li></ul>
       </div>
+      <div class="skills">
+        <article class="skill">
+          <div class="skill-head"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-4 4v-4H6a2 2 0 0 1-2-2z"/><path d="M8 9h8M8 12h5"/></svg></span><h3>LLM &amp; GenAI</h3></div>
+          <ul class="skill-chips"><li class="core">RAG / CRAG</li><li class="core">LangGraph</li><li class="core">LLM-as-judge</li><li class="core">Human-in-the-loop</li><li>LangChain</li><li>Agentic workflows</li><li>Trustcall memory</li><li>Prompt engineering</li><li>LLM evaluation</li></ul>
+        </article>
+        <article class="skill">
+          <div class="skill-head"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M4 20L17 7"/><path d="M12 7h5v5"/><circle cx="9" cy="8" r="1"/><circle cx="16" cy="16" r="1"/></svg></span><h3>Vector search &amp; NLP</h3></div>
+          <ul class="skill-chips"><li class="core">pgvector</li><li class="core">Embeddings</li><li class="core">Arabic &amp; English NLP</li><li>Qdrant</li><li>ChromaDB</li><li>Pinecone</li><li>Semantic chunking</li><li>Hugging Face</li><li>NLTK</li></ul>
+        </article>
+        <article class="skill">
+          <div class="skill-head"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/></svg></span><h3>Backend</h3></div>
+          <ul class="skill-chips"><li class="core">Python</li><li class="core">FastAPI</li><li class="core">PostgreSQL</li><li>Pydantic v2</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>MongoDB / Motor</li><li>REST APIs</li><li>Clean architecture</li></ul>
+        </article>
+        <article class="skill">
+          <div class="skill-head"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><h3>MLOps &amp; infrastructure</h3></div>
+          <ul class="skill-chips"><li class="core">Docker Compose</li><li class="core">Prometheus</li><li class="core">Grafana</li><li>nginx</li><li>structlog</li><li>GitHub Actions</li><li>pytest</li><li>Locust</li><li>uv</li></ul>
+        </article>
+        <article class="skill">
+          <div class="skill-head"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="12" r="2.5"/><path d="M8 6.8l7.8 4.2M8 17.2l7.8-4.2M6 8v8"/></svg></span><h3>Models &amp; ML</h3></div>
+          <ul class="skill-chips"><li class="core">PyTorch</li><li class="core">Groq · Llama 3.3 / gpt-oss</li><li>Stable Diffusion fine-tuning</li><li>OpenAI-compatible APIs</li><li>TensorFlow</li><li>scikit-learn</li><li>NumPy</li><li>Pandas</li><li>Gradio</li></ul>
+        </article>
+        <article class="skill">
+          <div class="skill-head"><span class="skill-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/></svg></span><h3>Languages</h3></div>
+          <ul class="skill-chips"><li class="core">Arabic · native</li><li class="core">English · IELTS 8.0</li><li>German · professional working</li></ul>
+        </article>
+      </div>
+      <p class="skills-legend"><span class="legend-core"></span> used in production-grade projects <span class="legend-rest"></span> also experienced with</p>
     </div>
   </section>
 
