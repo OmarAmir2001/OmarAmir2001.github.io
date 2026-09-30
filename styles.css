@@ -190,7 +190,7 @@ strong { font-weight: 600; color: var(--ink); }
 
 /* ---------- Sections ---------- */
 .section { padding: 88px 0; }
-.section-tint { background: var(--bg-tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.section-tint { background: color-mix(in srgb, var(--bg-tint) 72%, transparent); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; flex-wrap: wrap; }
 .sec-num { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--brass); }
 .sec-head h2 { font-size: clamp(34px, 5vw, 52px); font-weight: 400; letter-spacing: -.025em; }
@@ -361,3 +361,23 @@ strong { font-weight: 600; color: var(--ink); }
 .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
 .js .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* ---------- Ink background ---------- */
+#ink { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.nav { z-index: 50; }
+main, .footer { position: relative; z-index: 1; }
+.motion-toggle {
+  position: fixed; right: 16px; bottom: 16px; z-index: 40;
+  display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px 0 10px;
+  border: 1px solid var(--line); border-radius: 999px; cursor: pointer;
+  background: color-mix(in srgb, var(--surface) 88%, transparent); color: var(--muted);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: var(--shadow);
+  font: 500 12px var(--mono);
+}
+.motion-toggle:hover { color: var(--ink); border-color: var(--line-strong); }
+.motion-toggle svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; fill: none; }
+.motion-toggle .i-play { fill: currentColor; stroke: none; display: none; }
+.motion-toggle.is-paused .i-play { display: block; }
+.motion-toggle.is-paused .i-pause { display: none; }
+.motion-toggle.is-paused .motion-hint { display: none; }
+@media (max-width: 600px) { .motion-hint { display: none; } .motion-toggle { padding: 0; width: 36px; justify-content: center; } }

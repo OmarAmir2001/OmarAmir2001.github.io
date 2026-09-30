@@ -24,6 +24,12 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<canvas id="ink" aria-hidden="true"></canvas>
+<button class="motion-toggle" type="button" aria-pressed="false" aria-label="Pause background animation">
+  <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+  <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg>
+  <span class="motion-hint">move · click to ripple</span>
+</button>
 
 <header class="nav">
   <div class="wrap nav-inner">
@@ -428,5 +434,6 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="ink.js"></script>
 </body>
 </html>
