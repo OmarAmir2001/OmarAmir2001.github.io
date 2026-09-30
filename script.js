@@ -16,7 +16,7 @@
 
   // Fade sections in as they scroll into view.
   if ("IntersectionObserver" in window) {
-    var targets = document.querySelectorAll(".project, .skill, .about-grid, .contact-inner");
+    var targets = document.querySelectorAll(".project, .skill, .decision, .mini, .exp, .prod, .cs-diagrams, .about-grid, .contact-inner");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
