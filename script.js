@@ -64,96 +64,269 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* ---------- Judge panel ----------
-     Illustrative scenarios for the Handbook Assistant's three gates.
-     Thresholds match the project's defaults (0.5 / 0.8 / 0.7). */
-  var THRESH = [0.5, 0.8, 0.7];
-  var SCENARIOS = [
+  /* ---------- Pipeline player ----------
+     Steps through each project's pipeline, one stage at a time. */
+  var PROJECTS = [
     {
-      q: "What's the minimum GPA to stay off academic probation?",
-      retrieve: "5 excerpts · CS handbook first",
-      scores: [0.86, 0.92, 0.88],
-      verdict: ["ok", "Answered", "All three judges agree, so the student gets a cited answer from the handbook."]
+      "key": "handbook",
+      "tag": "LLM · RAG · Human-in-the-loop",
+      "name": "Handbook Assistant",
+      "sum": "Answers student questions from the handbooks, or hands them to a human advisor.",
+      "steps": [
+        [
+          "Retrieve",
+          "handbook excerpts via pgvector",
+          ""
+        ],
+        [
+          "Context check",
+          "do the excerpts cover the question?",
+          "gate"
+        ],
+        [
+          "Generate",
+          "an answer built only from the excerpts",
+          ""
+        ],
+        [
+          "Faithfulness + relevance",
+          "two judges, run in parallel",
+          "gate"
+        ],
+        [
+          "Answer or escalate",
+          "a ticket for an advisor if any check fails",
+          "ok"
+        ]
+      ],
+      "stats": [
+        [
+          "3",
+          "judge gates"
+        ],
+        [
+          "115",
+          "tests in CI"
+        ]
+      ]
     },
     {
-      q: "Can I register 21 credit hours this term?",
-      retrieve: "5 excerpts · none cover overloads",
-      scores: [0.34, null, null],
-      verdict: ["esc", "Escalated to an advisor", "The excerpts don't cover the question, so no answer is generated. A pending ticket is opened with the reason and the excerpts."]
+      "key": "mizan",
+      "tag": "LLM · RAG · Arabic NLP",
+      "name": "Mizan",
+      "sum": "Egyptian labor law questions, answered in Arabic or English.",
+      "steps": [
+        [
+          "Load profile",
+          "what it remembers about the user",
+          ""
+        ],
+        [
+          "Retrieve",
+          "ChromaDB with multilingual-e5",
+          ""
+        ],
+        [
+          "Grade passages",
+          "rewrite the question and retry if weak",
+          "gate"
+        ],
+        [
+          "Generate",
+          "a personalized, grounded answer",
+          ""
+        ],
+        [
+          "Save profile",
+          "Trustcall updates the user's memory",
+          "ok"
+        ]
+      ],
+      "stats": [
+        [
+          "AR + EN",
+          "languages"
+        ],
+        [
+          "Live",
+          "on Hugging Face"
+        ]
+      ]
     },
     {
-      q: "هل يمكنني التحويل من قسم نظم المعلومات إلى علوم الحاسب في السنة الثالثة؟",
-      rtl: true,
-      retrieve: "5 excerpts · IS handbook first",
-      scores: [0.71, 0.62, 0.84],
-      verdict: ["esc", "Escalated to an advisor", "The draft is on topic, but some of its claims aren't supported by the excerpts. It fails faithfulness, so a human decides."]
+      "key": "repo",
+      "tag": "LLM pipeline",
+      "name": "GitHub Repository Q&A",
+      "sum": "Ask questions about a codebase through a REST API.",
+      "steps": [
+        [
+          "Ingest",
+          "load the repository",
+          ""
+        ],
+        [
+          "Retrieve",
+          "find the code relevant to the question",
+          ""
+        ],
+        [
+          "Answer",
+          "an LLM response grounded in the repo",
+          ""
+        ],
+        [
+          "Serve",
+          "a REST API packaged with Docker",
+          "ok"
+        ]
+      ],
+      "stats": [
+        [
+          "<200 ms",
+          "API responses"
+        ],
+        [
+          "Docker",
+          "reproducible"
+        ]
+      ]
+    },
+    {
+      "key": "visioneer",
+      "tag": "Generative vision · Published",
+      "name": "Visioneer",
+      "sum": "Floor plans generated from text prompts, inside an Android app.",
+      "steps": [
+        [
+          "Prompt template",
+          "a structured description of the layout",
+          ""
+        ],
+        [
+          "Fine-tuned SD 1.5",
+          "trained on 12,000+ floor plans",
+          ""
+        ],
+        [
+          "Floor plan",
+          "the generated layout",
+          ""
+        ],
+        [
+          "Android app",
+          "view and share the design",
+          "ok"
+        ]
+      ],
+      "stats": [
+        [
+          "12k+",
+          "training samples"
+        ],
+        [
+          "1",
+          "published paper"
+        ]
+      ]
+    },
+    {
+      "key": "bookings",
+      "tag": "Classical ML",
+      "name": "Reservation Cancellation",
+      "sum": "Predicts which reservations will be cancelled.",
+      "steps": [
+        [
+          "Features",
+          "engineered from 10,000+ records",
+          ""
+        ],
+        [
+          "Train",
+          "a supervised model",
+          ""
+        ],
+        [
+          "Tune",
+          "hyperparameters, +12% F1",
+          ""
+        ],
+        [
+          "Predict",
+          "85% accuracy",
+          "ok"
+        ]
+      ],
+      "stats": [
+        [
+          "85%",
+          "accuracy"
+        ],
+        [
+          "+12%",
+          "F1 from tuning"
+        ]
+      ]
     }
   ];
 
-  var tabs = Array.prototype.slice.call(document.querySelectorAll(".judge-tabs [role=tab]"));
-  var qEl = document.getElementById("j-question");
-  var rEl = document.getElementById("j-retrieve-val");
-  var gates = Array.prototype.slice.call(document.querySelectorAll("#j-gates .gate"));
-  var vEl = document.getElementById("j-verdict");
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".player-tabs [role=tab]"));
+  var tagEl = document.getElementById("pl-tag");
+  var nameEl = document.getElementById("pl-name");
+  var sumEl = document.getElementById("pl-sum");
+  var stepsEl = document.getElementById("pl-steps");
+  var statsEl = document.getElementById("pl-stats");
+  var linkEl = document.getElementById("pl-link");
+  var footEl = document.querySelector(".pl-foot");
   var timers = [], cycle = null, userPicked = false, current = 0;
 
   function later(fn, ms) { timers.push(setTimeout(fn, reduceMotion ? 0 : ms)); }
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
 
-  function setGate(i, score) {
-    var g = gates[i];
-    var fill = g.querySelector(".fill"), scoreEl = g.querySelector(".g-score"), st = g.querySelector(".g-status");
-    g.classList.remove("pass", "fail", "skipped");
-    if (score === null) {
-      g.classList.add("skipped");
-      fill.style.setProperty("--v", 0);
-      scoreEl.textContent = "—";
-      st.className = "g-status skip";
-      st.textContent = "not run · escalated earlier";
-      return;
-    }
-    var ok = score >= THRESH[i];
-    g.classList.add(ok ? "pass" : "fail");
-    fill.style.setProperty("--v", score);
-    scoreEl.textContent = score.toFixed(2);
-    st.className = "g-status " + (ok ? "pass" : "fail");
-    st.textContent = (ok ? "pass · ≥ " : "fail · < ") + THRESH[i].toFixed(2);
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
   }
 
   function show(idx) {
     clearTimers();
     current = idx;
-    var s = SCENARIOS[idx];
+    var p = PROJECTS[idx];
     tabs.forEach(function (t, i) { t.setAttribute("aria-selected", String(i === idx)); t.tabIndex = i === idx ? 0 : -1; });
-    qEl.textContent = s.q;
-    if (s.rtl) { qEl.setAttribute("dir", "rtl"); qEl.setAttribute("lang", "ar"); } else { qEl.removeAttribute("dir"); qEl.removeAttribute("lang"); }
+    tagEl.textContent = p.tag;
+    nameEl.textContent = p.name;
+    sumEl.textContent = p.sum;
+    linkEl.setAttribute("href", "#proj-" + p.key);
 
-    // reset
-    rEl.textContent = "searching…";
-    gates.forEach(function (g) {
-      g.classList.remove("pass", "fail", "skipped");
-      g.querySelector(".fill").style.setProperty("--v", 0);
-      g.querySelector(".g-score").textContent = "…";
-      var st = g.querySelector(".g-status"); st.className = "g-status skip"; st.textContent = "waiting";
+    stepsEl.textContent = "";
+    var items = p.steps.map(function (s) {
+      var li = el("li", "pl-step" + (s[2] ? " " + s[2] : ""));
+      var dot = el("span", "pl-dot"); dot.setAttribute("aria-hidden", "true");
+      var body = el("div");
+      body.appendChild(el("b", null, s[0]));
+      body.appendChild(el("small", null, s[1]));
+      li.appendChild(dot); li.appendChild(body);
+      stepsEl.appendChild(li);
+      return li;
     });
-    vEl.className = "verdict wait";
-    vEl.innerHTML = "<b>Judging…</b><span>Checking the draft against the evidence.</span>";
 
-    later(function () { rEl.textContent = s.retrieve; }, 450);
-    later(function () { setGate(0, s.scores[0]); }, 900);
-    // gates 2a and 2b run concurrently, so they fill together
-    later(function () { setGate(1, s.scores[1]); setGate(2, s.scores[2]); }, 1800);
-    later(function () {
-      vEl.className = "verdict " + s.verdict[0];
-      vEl.innerHTML = "<b></b><span></span>";
-      vEl.querySelector("b").textContent = s.verdict[1];
-      vEl.querySelector("span").textContent = s.verdict[2];
-    }, 2600);
+    statsEl.textContent = "";
+    p.stats.forEach(function (st) {
+      var d = el("div");
+      d.appendChild(el("b", null, st[0]));
+      d.appendChild(el("span", null, st[1]));
+      statsEl.appendChild(d);
+    });
+
+    footEl.classList.add("pending");
+    items.forEach(function (li, i) { later(function () { li.classList.add("on"); }, 350 + i * 520); });
+    later(function () { footEl.classList.remove("pending"); }, 350 + items.length * 520);
   }
 
   function startCycle() {
     if (reduceMotion || userPicked) return;
-    cycle = setInterval(function () { show((current + 1) % SCENARIOS.length); }, 7500);
+    cycle = setInterval(function () { show((current + 1) % PROJECTS.length); }, 6500);
   }
 
   tabs.forEach(function (t, i) {
@@ -167,8 +340,22 @@
     });
   });
 
+  // Reserve room for the tallest project so the hero doesn't jump between them.
+  var screenEl = document.getElementById("pl-screen");
+  function reserveHeight() {
+    var showing = current, tallest = 0;
+    screenEl.style.minHeight = "";
+    PROJECTS.forEach(function (p, i) {
+      show(i);
+      tallest = Math.max(tallest, screenEl.offsetHeight);
+    });
+    screenEl.style.minHeight = tallest + "px";
+    show(showing);
+  }
+
   if (tabs.length) {
-    show(0);
+    reserveHeight();
+    window.addEventListener("resize", reserveHeight);
     startCycle();
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) clearInterval(cycle); else { clearInterval(cycle); startCycle(); }
