@@ -1,12 +1,14 @@
 (function () {
   var root = document.documentElement;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var darkMedia = window.matchMedia("(prefers-color-scheme: dark)");
 
   /* ---------- Theme ---------- */
   document.querySelector(".theme-toggle").addEventListener("click", function () {
-    var light = root.getAttribute("data-theme") === "light";
-    if (light) root.removeAttribute("data-theme"); else root.setAttribute("data-theme", "light");
-    try { localStorage.setItem("theme", light ? "dark" : "light"); } catch (e) {}
+    var current = root.getAttribute("data-theme") || (darkMedia.matches ? "dark" : "light");
+    var next = current === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
   });
 
   /* ---------- Mobile menu ---------- */
@@ -23,33 +25,121 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* ---------- Terminal typing ---------- */
-  var term = document.querySelector(".term");
-  if (term && !reduceMotion) {
-    var parts = Array.prototype.slice.call(term.querySelectorAll(".t-line, .t-out"));
-    term.classList.add("typing");
-    var i = 0;
-    var next = function () {
-      if (i >= parts.length) { term.classList.remove("typing"); return; }
-      var el = parts[i++];
-      el.classList.add("shown");
-      var cmd = el.classList.contains("t-line") && el.querySelector("[data-type]");
-      if (!cmd) { setTimeout(next, 260); return; }
-      var full = cmd.textContent, n = 0;
-      cmd.textContent = "";
-      var speed = full.length > 30 ? 14 : 35;
-      (function type() {
-        cmd.textContent = full.slice(0, ++n);
-        if (n < full.length) setTimeout(type, speed); else setTimeout(next, 220);
-      })();
-    };
-    setTimeout(next, 250);
+  /* ---------- Judge panel ----------
+     Illustrative scenarios for the Handbook Assistant's three gates.
+     Thresholds match the project's defaults (0.5 / 0.8 / 0.7). */
+  var THRESH = [0.5, 0.8, 0.7];
+  var SCENARIOS = [
+    {
+      q: "What's the minimum GPA to stay off academic probation?",
+      retrieve: "5 excerpts · CS handbook first",
+      scores: [0.86, 0.92, 0.88],
+      verdict: ["ok", "Answered", "All three judges agree, so the student gets a cited answer from the handbook."]
+    },
+    {
+      q: "Can I register 21 credit hours this term?",
+      retrieve: "5 excerpts · none cover overloads",
+      scores: [0.34, null, null],
+      verdict: ["esc", "Escalated to an advisor", "The excerpts don't cover the question, so no answer is generated. A pending ticket is opened with the reason and the excerpts."]
+    },
+    {
+      q: "هل يمكنني التحويل من قسم نظم المعلومات إلى علوم الحاسب في السنة الثالثة؟",
+      rtl: true,
+      retrieve: "5 excerpts · IS handbook first",
+      scores: [0.71, 0.62, 0.84],
+      verdict: ["esc", "Escalated to an advisor", "The draft is on topic, but some of its claims aren't supported by the excerpts. It fails faithfulness, so a human decides."]
+    }
+  ];
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".judge-tabs [role=tab]"));
+  var qEl = document.getElementById("j-question");
+  var rEl = document.getElementById("j-retrieve-val");
+  var gates = Array.prototype.slice.call(document.querySelectorAll("#j-gates .gate"));
+  var vEl = document.getElementById("j-verdict");
+  var timers = [], cycle = null, userPicked = false, current = 0;
+
+  function later(fn, ms) { timers.push(setTimeout(fn, reduceMotion ? 0 : ms)); }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  function setGate(i, score) {
+    var g = gates[i];
+    var fill = g.querySelector(".fill"), scoreEl = g.querySelector(".g-score"), st = g.querySelector(".g-status");
+    g.classList.remove("pass", "fail", "skipped");
+    if (score === null) {
+      g.classList.add("skipped");
+      fill.style.setProperty("--v", 0);
+      scoreEl.textContent = "—";
+      st.className = "g-status skip";
+      st.textContent = "not run · escalated earlier";
+      return;
+    }
+    var ok = score >= THRESH[i];
+    g.classList.add(ok ? "pass" : "fail");
+    fill.style.setProperty("--v", score);
+    scoreEl.textContent = score.toFixed(2);
+    st.className = "g-status " + (ok ? "pass" : "fail");
+    st.textContent = (ok ? "pass · ≥ " : "fail · < ") + THRESH[i].toFixed(2);
+  }
+
+  function show(idx) {
+    clearTimers();
+    current = idx;
+    var s = SCENARIOS[idx];
+    tabs.forEach(function (t, i) { t.setAttribute("aria-selected", String(i === idx)); t.tabIndex = i === idx ? 0 : -1; });
+    qEl.textContent = s.q;
+    if (s.rtl) { qEl.setAttribute("dir", "rtl"); qEl.setAttribute("lang", "ar"); } else { qEl.removeAttribute("dir"); qEl.removeAttribute("lang"); }
+
+    // reset
+    rEl.textContent = "searching…";
+    gates.forEach(function (g) {
+      g.classList.remove("pass", "fail", "skipped");
+      g.querySelector(".fill").style.setProperty("--v", 0);
+      g.querySelector(".g-score").textContent = "…";
+      var st = g.querySelector(".g-status"); st.className = "g-status skip"; st.textContent = "waiting";
+    });
+    vEl.className = "verdict wait";
+    vEl.innerHTML = "<b>Judging…</b><span>Checking the draft against the evidence.</span>";
+
+    later(function () { rEl.textContent = s.retrieve; }, 450);
+    later(function () { setGate(0, s.scores[0]); }, 900);
+    // gates 2a and 2b run concurrently, so they fill together
+    later(function () { setGate(1, s.scores[1]); setGate(2, s.scores[2]); }, 1800);
+    later(function () {
+      vEl.className = "verdict " + s.verdict[0];
+      vEl.innerHTML = "<b></b><span></span>";
+      vEl.querySelector("b").textContent = s.verdict[1];
+      vEl.querySelector("span").textContent = s.verdict[2];
+    }, 2600);
+  }
+
+  function startCycle() {
+    if (reduceMotion || userPicked) return;
+    cycle = setInterval(function () { show((current + 1) % SCENARIOS.length); }, 7500);
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { userPicked = true; clearInterval(cycle); show(i); });
+    t.addEventListener("keydown", function (e) {
+      var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      var n = (i + d + tabs.length) % tabs.length;
+      tabs[n].focus(); tabs[n].click();
+    });
+  });
+
+  if (tabs.length) {
+    show(0);
+    startCycle();
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) clearInterval(cycle); else { clearInterval(cycle); startCycle(); }
+    });
   }
 
   /* ---------- Reveal + counters ---------- */
   function countUp(el) {
     var target = +el.getAttribute("data-count"), suffix = el.getAttribute("data-suffix") || "";
-    var start = null, dur = 1200;
+    var start = null, dur = 1300;
     function step(ts) {
       if (!start) start = ts;
       var p = Math.min((ts - start) / dur, 1);
@@ -60,7 +150,7 @@
   }
 
   if ("IntersectionObserver" in window && !reduceMotion) {
-    var targets = document.querySelectorAll(".sec-title, .about-text, .counter, .feature, .card, .skill, .tl-item, .certs li, .paper, .contact-box");
+    var targets = document.querySelectorAll(".sec-head, .about-text, .counter, .feature-head, .cs-intro, .cs-diagrams, .decisions li, .prod, .mizan, .card, .skill, .timeline li, .courses, .paper, .contact-grid");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
@@ -69,110 +159,7 @@
         if (c) countUp(c);
         io.unobserve(entry.target);
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
     targets.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
   }
-
-  /* ---------- Embedding-space background ----------
-     Points drift slowly; the pointer acts as a query vector and
-     lights up its k nearest neighbours, like a retrieval step. */
-  var canvas = document.getElementById("field");
-  if (!canvas || !canvas.getContext) return;
-  var ctx = canvas.getContext("2d");
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  var W, H, pts = [], K = 5;
-  var query = { x: -1, y: -1, auto: true, t: 0 };
-
-  function rgb() { return getComputedStyle(root).getPropertyValue("--field-dot").trim() || "45, 212, 191"; }
-
-  function resize() {
-    W = window.innerWidth; H = window.innerHeight;
-    canvas.width = W * dpr; canvas.height = H * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var count = Math.round(Math.min(110, (W * H) / 14000));
-    pts = [];
-    for (var j = 0; j < count; j++) {
-      pts.push({
-        x: Math.random() * W, y: Math.random() * H,
-        vx: (Math.random() - .5) * .18, vy: (Math.random() - .5) * .18,
-        r: Math.random() * 1.4 + .6
-      });
-    }
-  }
-
-  function draw() {
-    var c = rgb();
-    ctx.clearRect(0, 0, W, H);
-
-    if (query.auto) {
-      query.t += 0.0025;
-      query.x = W * (0.5 + 0.35 * Math.cos(query.t * 1.3));
-      query.y = H * (0.5 + 0.3 * Math.sin(query.t * 1.9));
-    }
-
-    var i, p;
-    for (i = 0; i < pts.length; i++) {
-      p = pts[i];
-      if (!reduceMotion) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
-      }
-      p.d = (p.x - query.x) * (p.x - query.x) + (p.y - query.y) * (p.y - query.y);
-    }
-
-    // faint links between close points: the "cluster" structure
-    ctx.lineWidth = 1;
-    for (i = 0; i < pts.length; i++) {
-      for (var j = i + 1; j < pts.length; j++) {
-        var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d2 = dx * dx + dy * dy;
-        if (d2 < 9000) {
-          ctx.strokeStyle = "rgba(" + c + "," + (0.07 * (1 - d2 / 9000)) + ")";
-          ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke();
-        }
-      }
-    }
-
-    // k nearest neighbours of the query
-    var nn = pts.slice().sort(function (a, b) { return a.d - b.d; }).slice(0, K);
-    ctx.setLineDash([3, 4]);
-    nn.forEach(function (q) {
-      ctx.strokeStyle = "rgba(" + c + ",0.28)";
-      ctx.beginPath(); ctx.moveTo(query.x, query.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-    });
-    ctx.setLineDash([]);
-
-    for (i = 0; i < pts.length; i++) {
-      p = pts[i];
-      var hit = nn.indexOf(p) !== -1;
-      ctx.fillStyle = "rgba(" + c + "," + (hit ? 0.9 : 0.28) + ")";
-      ctx.beginPath(); ctx.arc(p.x, p.y, hit ? p.r + 1.6 : p.r, 0, Math.PI * 2); ctx.fill();
-    }
-
-    // the query point itself
-    ctx.strokeStyle = "rgba(" + c + ",0.6)";
-    ctx.beginPath(); ctx.arc(query.x, query.y, 5, 0, Math.PI * 2); ctx.stroke();
-  }
-
-  var running = false;
-  function loop() {
-    if (!running) return;
-    draw();
-    requestAnimationFrame(loop);
-  }
-  function start() { if (!running && !reduceMotion) { running = true; requestAnimationFrame(loop); } }
-  function stop() { running = false; }
-
-  resize();
-  draw();
-  start();
-
-  window.addEventListener("resize", function () { resize(); draw(); });
-  window.addEventListener("pointermove", function (e) {
-    if (e.pointerType === "touch") return;
-    query.auto = false; query.x = e.clientX; query.y = e.clientY;
-    if (reduceMotion) draw();
-  });
-  document.addEventListener("pointerleave", function () { query.auto = true; });
-  document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else start(); });
 })();

@@ -4,45 +4,46 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Omar Amir · AI Engineer</title>
-<meta name="description" content="Omar Amir, AI, LLM and RAG engineer in Giza, Egypt. I build production RAG agents that check their own answers and hand hard questions to a human.">
+<meta name="description" content="Omar Amir, AI, LLM and RAG engineer in Giza, Egypt. I build AI agents that know when they're wrong: they check their own answers and hand hard questions to a human.">
 <meta property="og:title" content="Omar Amir · AI Engineer">
-<meta property="og:description" content="Production RAG agents that check their own answers and hand hard questions to a human.">
+<meta property="og:description" content="AI agents that know when they're wrong.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://omaramir2001.github.io/">
-<meta name="theme-color" content="#0a0e12">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e12'/%3E%3Ctext x='32' y='42' font-family='monospace' font-weight='700' font-size='26' text-anchor='middle' fill='%232dd4bf'%3E%3E_%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230e5e4f'/%3E%3Cg fill='none' stroke='%23f5f1e8' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M32 14v34M20 48h24M16 22h32'/%3E%3Cpath d='M16 22l-7 14h14zM48 22l-7 14h14z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>
   try {
     var t = localStorage.getItem("theme");
-    if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
   } catch (e) {}
   document.documentElement.classList.add("js");
 </script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<canvas id="field" aria-hidden="true"></canvas>
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="#top" aria-label="Omar Amir, home"><span class="logo-prompt">&gt;_</span>omar</a>
+    <a class="logo" href="#top" aria-label="Omar Amir, home">
+      <svg class="scale-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 12v36M20 50h24M14 20h36"/><path d="M14 20l-7 14h14zM50 20l-7 14h14z"/><circle cx="32" cy="12" r="2.5"/></svg>
+      <span>Omar Amir</span>
+    </a>
     <nav id="menu" aria-label="Primary">
       <ul class="nav-links">
-        <li><a href="#about"><span>01</span>About</a></li>
-        <li><a href="#case-study"><span>02</span>Case study</a></li>
-        <li><a href="#projects"><span>03</span>Projects</a></li>
-        <li><a href="#skills"><span>04</span>Skills</a></li>
-        <li><a href="#experience"><span>05</span>Experience</a></li>
-        <li><a href="#research"><span>06</span>Research</a></li>
-        <li><a href="#contact"><span>07</span>Contact</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#case-study">Case study</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
     </nav>
     <div class="nav-actions">
-      <button class="icon-btn theme-toggle" type="button" aria-label="Toggle light mode">
+      <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode">
         <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
@@ -56,45 +57,64 @@
 <main id="main">
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="wrap">
-      <div class="term" role="region" aria-label="Introduction">
-        <div class="term-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="term-title">~/handbook-assistant — bash</span>
-        </div>
-        <div class="term-body">
-          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>whoami</span></div>
-          <div class="t-out"><h1 class="name">Omar Amir</h1></div>
-
-          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>cat role.txt</span></div>
-          <div class="t-out"><p class="role">AI Engineer · LLM &amp; RAG · NLP<span class="caret" aria-hidden="true"></span></p></div>
-
-          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>./about --short</span></div>
-          <div class="t-out"><p class="about-short">I build <b class="hl">LLM agents that know when they're wrong</b>: <b class="hl">RAG</b> pipelines that check their own answers, <b class="hl">escalate to a human</b> when they aren't sure, and ship with the tests and monitoring that production needs. Published researcher, and a teaching assistant who has mentored more than 100 students.</p></div>
-
-          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>./agent ask "Can I register 21 credit hours this term?"</span></div>
-          <div class="t-out trace">
-            <p class="tr-comment"># sample run of the Handbook Assistant</p>
-            <p><span class="tr-k">retrieve</span>            5 chunks · dept=CS · handbook first <span class="ok">✓</span></p>
-            <p><span class="tr-k">gate.context_rel</span>    0.34 &lt; 0.50 <span class="bad">✗ fail</span></p>
-            <p><span class="tr-k">escalate</span>            ticket <span class="tk">pending</span> · run ended <span class="warn">→ advisor</span></p>
-          </div>
-
-          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>ls quick_links/</span></div>
-          <div class="t-out">
-            <div class="cta">
-              <a class="btn btn-primary" href="#case-study">See the case study <span aria-hidden="true">→</span></a>
-              <a class="btn btn-ghost" href="#contact">Get in touch</a>
-              <a class="btn btn-ghost" href="assets/Omar_Amir_CV.pdf" download>Download CV</a>
-            </div>
-          </div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="hello"><span lang="ar" class="ar">أهلاً</span> — hello, I'm</p>
+        <h1>Omar Amir</h1>
+        <p class="role">AI Engineer · LLM &amp; RAG · NLP</p>
+        <p class="pitch">I build AI agents that <em>know when they're wrong.</em></p>
+        <p class="intro">Most chatbots answer everything with the same confidence. The ones I build check their own answers with independent judges and <strong>hand the hard questions to a human</strong>. They also come with the tests and monitoring they need to run in production.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#case-study">Read the case study</a>
+          <a class="btn btn-ghost" href="assets/Omar_Amir_CV.pdf" download>Download CV</a>
         </div>
       </div>
 
-      <dl class="strip">
-        <div><dt>Location</dt><dd>6th of October, Giza · Egypt</dd></div>
-        <div><dt>Currently</dt><dd><span class="dot" aria-hidden="true"></span>Teaching Assistant · building agents</dd></div>
-        <div><dt>Stack</dt><dd>LangGraph · FastAPI · pgvector</dd></div>
+      <!-- Judge panel: interactive demo of the Handbook Assistant's gates -->
+      <aside class="judge" aria-label="Interactive example: how my support agent decides whether to answer">
+        <div class="judge-head">
+          <span class="judge-title"><svg class="scale-mark sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 12v36M20 50h24M14 20h36"/><path d="M14 20l-7 14h14zM50 20l-7 14h14z"/></svg>The judge panel</span>
+          <span class="judge-note">illustrative scores</span>
+        </div>
+        <div class="judge-tabs" role="tablist" aria-label="Example questions">
+          <button role="tab" type="button" data-s="0" aria-selected="true">Probation GPA</button>
+          <button role="tab" type="button" data-s="1" aria-selected="false">21 credit hours</button>
+          <button role="tab" type="button" data-s="2" aria-selected="false" lang="ar">تحويل القسم</button>
+        </div>
+
+        <div class="bubble" id="j-question">What's the minimum GPA to stay off academic probation?</div>
+
+        <div class="j-row j-retrieve" id="j-retrieve"><span class="j-label">Retrieve</span><span class="j-val" id="j-retrieve-val">5 excerpts · CS handbook first</span></div>
+
+        <ol class="gates" id="j-gates">
+          <li class="gate" data-g="0">
+            <div class="g-top"><span class="g-name">Context relevance</span><span class="g-score">0.86</span></div>
+            <div class="meter"><span class="fill" style="--v:.86"></span><span class="tick" style="--t:.5" title="threshold 0.50"></span></div>
+            <span class="g-status pass">pass · ≥ 0.50</span>
+          </li>
+          <li class="gate" data-g="1">
+            <div class="g-top"><span class="g-name">Faithfulness</span><span class="g-score">0.92</span></div>
+            <div class="meter"><span class="fill" style="--v:.92"></span><span class="tick" style="--t:.8" title="threshold 0.80"></span></div>
+            <span class="g-status pass">pass · ≥ 0.80</span>
+          </li>
+          <li class="gate" data-g="2">
+            <div class="g-top"><span class="g-name">Answer relevance</span><span class="g-score">0.88</span></div>
+            <div class="meter"><span class="fill" style="--v:.88"></span><span class="tick" style="--t:.7" title="threshold 0.70"></span></div>
+            <span class="g-status pass">pass · ≥ 0.70</span>
+          </li>
+        </ol>
+
+        <div class="verdict ok" id="j-verdict" aria-live="polite">
+          <b>Answered</b><span>All three judges agree, so the student gets a cited answer from the handbook.</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="wrap">
+      <dl class="facts-strip">
+        <div><dt>Based in</dt><dd>6th of October, Giza, Egypt</dd></div>
+        <div><dt>Currently</dt><dd><span class="live" aria-hidden="true"></span>Teaching Assistant, building agents</dd></div>
+        <div><dt>Works in</dt><dd>English <span class="sep">·</span> <span lang="ar" class="ar">العربية</span> <span class="sep">·</span> Deutsch</dd></div>
       </dl>
     </div>
   </section>
@@ -102,46 +122,47 @@
   <!-- ABOUT -->
   <section class="section" id="about" aria-labelledby="about-h">
     <div class="wrap">
-      <h2 class="sec-title" id="about-h"><span class="sec-num">01</span>About</h2>
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2 id="about-h">About</h2>
+        <span class="sec-ar" lang="ar">نبذة</span>
+      </div>
       <div class="about-grid">
         <div class="about-text">
-          <p>I'm Omar, an AI engineer who likes owning a system from start to finish: <strong>ingestion and retrieval design, evaluation and escalation logic, and the deployment and monitoring</strong> that keep it working once real users arrive.</p>
-          <p>I got into AI through generative vision. For my graduation project I fine-tuned Stable Diffusion to generate floor plans, and that work became a <strong>peer-reviewed paper</strong> in <i>Machine Graphics &amp; Vision</i>. Since then I've focused on language: RAG, agents built with LangGraph, and working with <strong>both Arabic and English</strong>.</p>
+          <p class="drop">I'm Omar, an AI engineer who likes owning a system from start to finish: ingestion and retrieval design, evaluation and escalation logic, and the deployment and monitoring that keep it working once real users arrive.</p>
+          <p>I got into AI through generative vision. For my graduation project I fine-tuned Stable Diffusion to generate floor plans, and that work became a peer-reviewed paper. Since then I've focused on language: RAG, agents built with LangGraph, and systems that work in <strong>both Arabic and English</strong>.</p>
           <p>I care about decisions I can defend. That means one source of truth, judges that fail safe, metrics that show the system's own failure modes, and code I can test without starting the whole stack. As a teaching assistant, I explain those choices to students every week.</p>
         </div>
         <div class="counters">
-          <div class="counter"><b data-count="5">5</b><span>end-to-end<br>projects</span></div>
-          <div class="counter"><b data-count="1">1</b><span>peer-reviewed<br>publication</span></div>
-          <div class="counter"><b data-count="100" data-suffix="+">100+</b><span>students<br>mentored</span></div>
-          <div class="counter"><b data-count="115">115</b><span>tests in CI on<br>my main project</span></div>
+          <div class="counter"><b data-count="5">5</b><span>end-to-end projects</span></div>
+          <div class="counter"><b data-count="1">1</b><span>peer-reviewed paper</span></div>
+          <div class="counter"><b data-count="100" data-suffix="+">100+</b><span>students mentored</span></div>
+          <div class="counter"><b data-count="115">115</b><span>tests in CI on my main project</span></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CASE STUDY -->
-  <section class="section" id="case-study" aria-labelledby="cs-h">
+  <section class="section section-tint" id="case-study" aria-labelledby="cs-h">
     <div class="wrap">
-      <h2 class="sec-title" id="cs-h"><span class="sec-num">02</span>Featured case study</h2>
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2 id="cs-h">Featured case study</h2>
+        <span class="sec-ar" lang="ar">المشروع الرئيسي</span>
+      </div>
 
       <article class="feature">
-        <div class="feature-head">
-          <div class="feature-tags">
-            <span class="pill pill-accent">LLM · RAG · HUMAN-IN-THE-LOOP</span>
+        <header class="feature-head">
+          <div class="feature-meta">
+            <span class="tag tag-accent">LLM · RAG · Human-in-the-loop</span>
             <a class="ci" href="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml" target="_blank" rel="noopener"><img src="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml/badge.svg" alt="CI status" loading="lazy" height="20"></a>
           </div>
-          <h3>Handbook Assistant <span class="sub">A customer support agent that knows when to ask a human</span></h3>
+          <h3>Handbook Assistant</h3>
+          <p class="feature-sub">A customer support agent that knows when to ask a human.</p>
           <p class="lead">A support agent for a computer science institute. It answers student questions from the CS and IS handbooks, and when it can't answer confidently it <strong>opens a ticket for a human advisor instead of guessing</strong>. When the advisor replies, the answer goes back into the student's conversation, and the advisor can add it to the knowledge base so the same question is answered automatically next time.</p>
-
-          <div class="pipeline" aria-label="Pipeline">
-            <span class="step">retrieve</span><span class="arr">→</span>
-            <span class="step step-gate">gate: context</span><span class="arr">→</span>
-            <span class="step">generate</span><span class="arr">→</span>
-            <span class="step step-gate">gate: faithful ∥ relevant</span><span class="arr">→</span>
-            <span class="step step-ok">answer</span>
-            <span class="step step-esc">↳ else escalate</span>
-          </div>
-        </div>
+          <a class="btn btn-primary" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener">View the code on GitHub</a>
+        </header>
 
         <div class="cs-intro">
           <div>
@@ -159,10 +180,10 @@
             <figcaption>How the agent handles a question</figcaption>
             <ol class="flow-steps">
               <li><span class="n">1</span><div><b>Retrieve</b><small>pgvector search, filtered by the student's department, handbook first</small></div></li>
-              <li class="gate"><span class="n">G1</span><div><b>Context relevance</b><small>checked before generating: do the excerpts cover the question at all?</small></div></li>
+              <li class="is-gate"><span class="n">G1</span><div><b>Context relevance</b><small>checked before generating: do the excerpts cover the question at all?</small></div></li>
               <li><span class="n">2</span><div><b>Generate</b><small>an answer built only from the retrieved excerpts</small></div></li>
-              <li class="gate"><span class="n">G2</span><div><b>Faithfulness + answer relevance</b><small>run in parallel: is every claim supported, and does it answer the question asked?</small></div></li>
-              <li class="ok"><span class="n">✓</span><div><b>Answer the student</b><small>only when every gate passes</small></div></li>
+              <li class="is-gate"><span class="n">G2</span><div><b>Faithfulness + answer relevance</b><small>run in parallel: is every claim supported, and does it answer the question asked?</small></div></li>
+              <li class="is-ok"><span class="n">✓</span><div><b>Answer the student</b><small>only when every gate passes</small></div></li>
             </ol>
             <div class="flow-branch">
               <span class="arrow" aria-hidden="true">↳</span>
@@ -182,60 +203,53 @@
           </figure>
         </div>
 
-        <h4 class="decisions-title">Key design decisions</h4>
-        <div class="decisions">
-          <article class="decision">
-            <span class="d-num">01</span>
+        <h4 class="decisions-title">Six decisions I'd defend in a design review</h4>
+        <ol class="decisions">
+          <li>
             <h5>Separate judges, not a confidence score</h5>
             <p>Models are poorly calibrated when asked to rate their own confidence. Instead, three single-purpose judges each check something different against different evidence. The answer-relevance judge is deliberately <em>not shown</em> the excerpts, so it can catch an answer that is well grounded but answers the wrong question.</p>
-          </article>
-          <article class="decision">
-            <span class="d-num">02</span>
+          </li>
+          <li>
             <h5>Judges fail closed</h5>
             <p>If a judge returns output it can't parse, or can't be reached, the question escalates. A judge that failed open would let answers through exactly when the checking system is broken.</p>
-          </article>
-          <article class="decision">
-            <span class="d-num">03</span>
+          </li>
+          <li>
             <h5>Escalation ends the run</h5>
             <p>Nothing stays paused in memory waiting for a human who might take days. An open ticket is just a database row, so it survives restarts and scales. The student sees the advisor's reply on their next visit.</p>
-          </article>
-          <article class="decision">
-            <span class="d-num">04</span>
+          </li>
+          <li>
             <h5>The advisor decides what the agent learns</h5>
             <p>Resolving a ticket and adding its answer to the knowledge base are separate steps. One judge suggests whether the answer is general enough to reuse, and another holds back any answer that contradicts the handbook. Handbook text always ranks first.</p>
-          </article>
-          <article class="decision">
-            <span class="d-num">05</span>
+          </li>
+          <li>
             <h5>One source of truth</h5>
             <p>Postgres holds tickets, chunks and conversation history. The pgvector index is rebuilt from it and can be dropped and pushed again without losing anything. Syncing deletes and re-inserts by a stable key, so it never creates duplicates.</p>
-          </article>
-          <article class="decision">
-            <span class="d-num">06</span>
+          </li>
+          <li>
             <h5>Thin nodes, logic in controllers</h5>
             <p>Each LangGraph node calls one controller method. The advisor's HTTP endpoint calls the same controller as the graph, and all 115 tests run without a database, API keys or the graph.</p>
-          </article>
-        </div>
+          </li>
+        </ol>
 
         <div class="prod">
-          <div class="prod-text">
-            <h4>Built to run in production</h4>
-            <p>The most dangerous failure in this system doesn't show up in HTTP metrics. If the model provider slows down or fails, the judges fail closed and <strong>every question escalates, while <code>/chat</code> still returns 200 with normal latency</strong>.</p>
+          <blockquote class="prod-quote">
+            <p>"If the model provider goes down, every question escalates, while <code>/chat</code> still returns 200 with normal latency. A standard dashboard would look perfectly healthy."</p>
+            <footer>That's the failure I designed the monitoring around.</footer>
+          </blockquote>
+          <div class="prod-body">
             <p>So I added metrics specific to this system. <code>judge_failures_total{gate}</code> is the only signal that separates "the provider is down" from "retrieval is bad," two problems that need opposite fixes.</p>
+            <ul class="prod-list">
+              <li><b>Observability</b><span>Prometheus and Grafana, 7 alert rules checked with <code>promtool</code>, metrics labelled by route template so the number of series stays bounded, and JSON logs with a correlation ID for each conversation</span></li>
+              <li><b>Infrastructure</b><span>Docker Compose with one command (<code>make up</code>), nginx as the only public port, Alembic migrations on startup, and memory limits on every service</span></li>
+              <li><b>Correctness</b><span>A ticket state machine with an audit trail, optimistic locking that returns a 409 on conflict, and idempotent syncing to the vector index</span></li>
+              <li><b>Testing</b><span>115 tests in GitHub Actions, plus Locust load profiles</span></li>
+            </ul>
           </div>
-          <ul class="prod-list">
-            <li><b>Observability</b><span>Prometheus and Grafana, 7 alert rules checked with <code>promtool</code>, metrics labelled by route template so the number of series stays bounded, and JSON logs with a correlation ID for each conversation</span></li>
-            <li><b>Infrastructure</b><span>Docker Compose with one command (<code>make up</code>), nginx as the only public port, Alembic migrations on startup, and memory limits on every service</span></li>
-            <li><b>Correctness</b><span>A ticket state machine with an audit trail, optimistic locking that returns a 409 on conflict, and idempotent syncing to the vector index</span></li>
-            <li><b>Testing</b><span>115 tests in GitHub Actions, plus Locust load profiles</span></li>
-          </ul>
         </div>
 
-        <div class="feature-foot">
-          <ul class="chips" aria-label="Technologies">
-            <li>LangGraph</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>Pydantic v2</li><li>Groq · gpt-oss</li><li>Cohere</li><li>Prometheus</li><li>Grafana</li><li>nginx</li><li>Docker</li><li>pytest</li><li>uv</li>
-          </ul>
-          <a class="btn btn-primary" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>View code</a>
-        </div>
+        <ul class="chips" aria-label="Technologies">
+          <li>LangGraph</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>Pydantic v2</li><li>Groq · gpt-oss</li><li>Cohere</li><li>Prometheus</li><li>Grafana</li><li>nginx</li><li>Docker</li><li>pytest</li><li>uv</li>
+        </ul>
       </article>
     </div>
   </section>
@@ -243,81 +257,78 @@
   <!-- PROJECTS -->
   <section class="section" id="projects" aria-labelledby="proj-h">
     <div class="wrap">
-      <h2 class="sec-title" id="proj-h"><span class="sec-num">03</span>More projects</h2>
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2 id="proj-h">More projects</h2>
+        <span class="sec-ar" lang="ar">مشاريع أخرى</span>
+      </div>
 
-      <div class="cards">
-        <article class="card card-wide">
-          <span class="pill">LLM · RAG · ARABIC NLP</span>
+      <article class="mizan">
+        <div class="mizan-copy">
+          <span class="tag tag-accent">LLM · RAG · Arabic NLP · Live demo</span>
           <h3>Mizan <span class="ar" lang="ar">ميزان</span></h3>
+          <p class="mizan-def"><i>mīzān</i>, noun: a balance; a pair of scales.</p>
           <p>An agentic RAG assistant that answers questions about Egyptian labor law in <strong>Arabic and English</strong>. It is built as a stateful LangGraph graph: it grades what it retrieves, and when the results are weak it rewrites the question into more precise legal wording and searches again. Trustcall remembers each user across sessions, and Groq-hosted Llama 3.3 70B keeps answers fast.</p>
-          <div class="pipeline pipeline-sm" aria-label="Pipeline">
-            <span class="step">load profile</span><span class="arr">→</span>
-            <span class="step">retrieve</span><span class="arr">→</span>
-            <span class="step step-gate">grade</span><span class="arr">→</span>
-            <span class="step">generate</span><span class="arr">→</span>
-            <span class="step">save profile</span>
-            <span class="step step-esc">↺ rewrite if weak</span>
-          </div>
           <ul class="chips"><li>LangGraph</li><li>ChromaDB</li><li>Llama 3.3 70B · Groq</li><li>multilingual-e5</li><li>Trustcall</li><li>Gradio</li></ul>
           <div class="card-links">
+            <a class="btn btn-primary btn-sm" href="https://huggingface.co/spaces/OmarAmir2001/mizan" target="_blank" rel="noopener">Try the live demo ↗</a>
             <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/mizan" target="_blank" rel="noopener">Code</a>
-            <a class="btn btn-primary btn-sm" href="https://huggingface.co/spaces/OmarAmir2001/mizan" target="_blank" rel="noopener">Live demo ↗</a>
           </div>
-        </article>
+        </div>
+        <ol class="loop" aria-label="Mizan's corrective RAG loop">
+          <li>Load the user's profile</li>
+          <li>Retrieve from ChromaDB</li>
+          <li class="is-gate">Grade each passage</li>
+          <li>Generate a personalized answer</li>
+          <li>Save what it learned about the user</li>
+          <li class="loop-back">↺ If the results are weak, rewrite the question and search again</li>
+        </ol>
+      </article>
 
+      <div class="cards">
         <article class="card">
-          <span class="pill">GENERATIVE VISION · PUBLISHED</span>
+          <span class="tag">Generative vision · Published</span>
           <h3>Visioneer</h3>
-          <p>My graduation project. I fine-tuned Stable Diffusion v1.5 on <strong>more than 12,000 floor plans</strong>, using structured prompt templates, and shipped it in an Android app that generates floor plan designs. The work became a peer-reviewed paper.</p>
-          <div class="mini-stats">
-            <div><b>12k+</b><span>training samples</span></div>
-            <div><b>SD 1.5</b><span>base model</span></div>
-          </div>
-          <ul class="chips"><li>Stable Diffusion</li><li>PyTorch</li><li>Android</li></ul>
+          <p>My graduation project. I fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans, using structured prompt templates, and shipped it in an Android app that generates floor plan designs.</p>
+          <div class="stat-row"><div><b>12k+</b><span>training samples</span></div><div><b>SD 1.5</b><span>base model</span></div></div>
           <div class="card-links">
-            <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/VISIONEER_APP" target="_blank" rel="noopener">Code</a>
-            <a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Paper ↗</a>
+            <a href="https://github.com/OmarAmir2001/VISIONEER_APP" target="_blank" rel="noopener">Code →</a>
+            <a href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Paper →</a>
           </div>
         </article>
-
         <article class="card">
-          <span class="pill">LLM PIPELINE</span>
+          <span class="tag">LLM pipeline</span>
           <h3>GitHub Repository Q&amp;A Agent</h3>
           <p>A complete LLM pipeline (ingestion, retrieval and deployment) that answers questions about a code repository. It runs behind a REST API and is containerized with Docker.</p>
-          <div class="mini-stats">
-            <div><b>&lt;200 ms</b><span>API responses</span></div>
-            <div><b>Docker</b><span>reproducible</span></div>
-          </div>
-          <ul class="chips"><li>LangChain</li><li>Docker</li><li>REST API</li></ul>
-          <div class="card-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/GitHub-Repository-Q-A-Agent" target="_blank" rel="noopener">Code</a></div>
+          <div class="stat-row"><div><b>&lt;200 ms</b><span>API responses</span></div><div><b>Docker</b><span>reproducible</span></div></div>
+          <div class="card-links"><a href="https://github.com/OmarAmir2001/GitHub-Repository-Q-A-Agent" target="_blank" rel="noopener">Code →</a></div>
         </article>
-
         <article class="card">
-          <span class="pill">CLASSICAL ML</span>
+          <span class="tag">Classical ML</span>
           <h3>Reservation Cancellation Prediction</h3>
-          <p>A supervised model trained on more than 10,000 records to predict booking cancellations. Feature engineering and hyperparameter tuning improved its results.</p>
-          <div class="mini-stats">
-            <div><b>85%</b><span>accuracy</span></div>
-            <div><b>+12%</b><span>F1 from tuning</span></div>
-          </div>
-          <ul class="chips"><li>scikit-learn</li><li>Feature engineering</li></ul>
-          <div class="card-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/reservation-cancellation-prediction" target="_blank" rel="noopener">Code</a></div>
+          <p>A supervised model trained on more than 10,000 records to predict booking cancellations, improved with feature engineering and hyperparameter tuning.</p>
+          <div class="stat-row"><div><b>85%</b><span>accuracy</span></div><div><b>+12%</b><span>F1 from tuning</span></div></div>
+          <div class="card-links"><a href="https://github.com/OmarAmir2001/reservation-cancellation-prediction" target="_blank" rel="noopener">Code →</a></div>
         </article>
       </div>
     </div>
   </section>
 
   <!-- SKILLS -->
-  <section class="section" id="skills" aria-labelledby="skills-h">
+  <section class="section section-tint" id="skills" aria-labelledby="skills-h">
     <div class="wrap">
-      <h2 class="sec-title" id="skills-h"><span class="sec-num">04</span>Skills</h2>
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2 id="skills-h">Skills</h2>
+        <span class="sec-ar" lang="ar">المهارات</span>
+      </div>
       <div class="skills">
-        <div class="skill"><h3><span>01</span>LLM &amp; GenAI</h3><ul class="chips"><li>RAG / CRAG</li><li>LangGraph</li><li>LangChain</li><li>Agentic workflows</li><li>LLM-as-judge</li><li>Human-in-the-loop</li><li>Trustcall memory</li><li>Prompt engineering</li><li>LLM evaluation</li></ul></div>
-        <div class="skill"><h3><span>02</span>Vector search &amp; NLP</h3><ul class="chips"><li>pgvector</li><li>Qdrant</li><li>ChromaDB</li><li>Pinecone</li><li>Embeddings</li><li>Semantic chunking</li><li>Hugging Face</li><li>NLTK</li><li>Arabic &amp; English NLP</li></ul></div>
-        <div class="skill"><h3><span>03</span>Backend</h3><ul class="chips"><li>Python</li><li>FastAPI</li><li>Pydantic v2</li><li>PostgreSQL</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>MongoDB / Motor</li><li>REST APIs</li><li>Clean architecture</li></ul></div>
-        <div class="skill"><h3><span>04</span>MLOps &amp; infra</h3><ul class="chips"><li>Docker Compose</li><li>nginx</li><li>Prometheus</li><li>Grafana</li><li>structlog</li><li>GitHub Actions</li><li>pytest</li><li>Locust</li><li>uv</li></ul></div>
-        <div class="skill"><h3><span>05</span>Models &amp; ML</h3><ul class="chips"><li>Groq · Llama 3.3 / gpt-oss</li><li>OpenAI-compatible APIs</li><li>Stable Diffusion FT</li><li>PyTorch</li><li>TensorFlow</li><li>scikit-learn</li><li>NumPy</li><li>Pandas</li><li>Gradio</li></ul></div>
-        <div class="skill"><h3><span>06</span>Languages</h3><ul class="chips"><li>Arabic · native</li><li>English · IELTS 8.0</li><li>German · professional</li></ul></div>
+        <div class="skill"><h3>LLM &amp; GenAI</h3><p>RAG / CRAG · LangGraph · LangChain · agentic workflows · LLM-as-judge · human-in-the-loop · Trustcall memory · prompt engineering · LLM evaluation</p></div>
+        <div class="skill"><h3>Vector search &amp; NLP</h3><p>pgvector · Qdrant · ChromaDB · Pinecone · embeddings · semantic chunking · Hugging Face · NLTK · Arabic &amp; English NLP</p></div>
+        <div class="skill"><h3>Backend</h3><p>Python · FastAPI · Pydantic v2 · PostgreSQL · SQLAlchemy 2 async · Alembic · MongoDB / Motor · REST APIs · clean architecture</p></div>
+        <div class="skill"><h3>MLOps &amp; infrastructure</h3><p>Docker Compose · nginx · Prometheus · Grafana · structlog · GitHub Actions · pytest · Locust · uv</p></div>
+        <div class="skill"><h3>Models &amp; ML</h3><p>Groq (Llama 3.3, gpt-oss) · OpenAI-compatible APIs · Stable Diffusion fine-tuning · PyTorch · TensorFlow · scikit-learn · NumPy · Pandas · Gradio</p></div>
+        <div class="skill"><h3>Languages</h3><p>Arabic, native · English, full professional (IELTS 8.0) · German, professional working</p></div>
       </div>
     </div>
   </section>
@@ -325,81 +336,95 @@
   <!-- EXPERIENCE -->
   <section class="section" id="experience" aria-labelledby="exp-h">
     <div class="wrap">
-      <h2 class="sec-title" id="exp-h"><span class="sec-num">05</span>Experience &amp; Education</h2>
-      <ol class="timeline">
-        <li class="tl-item">
-          <span class="tl-date">2025 — Present</span>
-          <h3>Teaching Assistant</h3>
-          <p class="tl-org">Culture and Science City · Faculty of Computer Science</p>
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <h2 id="exp-h">Experience &amp; education</h2>
+        <span class="sec-ar" lang="ar">الخبرة والتعليم</span>
+      </div>
+      <div class="exp-grid">
+        <ol class="timeline">
+          <li>
+            <span class="tl-date">2025 — Present</span>
+            <h3>Teaching Assistant</h3>
+            <p class="tl-org">Culture and Science City · Faculty of Computer Science</p>
+            <p>Mentored more than 100 students in Machine Learning, Algorithms and Data Structures. Hands-on projects raised assignment completion rates by about 20%. I guide students building ML models in Python with TensorFlow, PyTorch and scikit-learn, from preprocessing through training and evaluation.</p>
+          </li>
+          <li>
+            <span class="tl-date">2023 — 2024</span>
+            <h3>Graduation project: Visioneer</h3>
+            <p class="tl-org">Culture and Science City</p>
+            <p>Fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans and shipped it in an Android app. The work was later published in <i>Machine Graphics &amp; Vision</i>.</p>
+          </li>
+          <li>
+            <span class="tl-date">2020 — 2024</span>
+            <h3>B.Sc. Computer Science, Excellence with Honors</h3>
+            <p class="tl-org">Culture and Science City, Egypt</p>
+          </li>
+        </ol>
+        <aside class="courses">
+          <h3>Selected courses</h3>
           <ul>
-            <li>Mentored more than 100 students in Machine Learning, Algorithms and Data Structures. Hands-on projects raised assignment completion rates by about 20%.</li>
-            <li>Guided students building ML models in Python with TensorFlow, PyTorch and scikit-learn, from preprocessing through training and evaluation.</li>
+            <li>Deep Learning Specialization <span>DeepLearning.AI</span></li>
+            <li>Machine Learning Specialization <span>Stanford · DeepLearning.AI</span></li>
+            <li>Mathematics for ML &amp; Data Science <span>DeepLearning.AI</span></li>
+            <li>Build Chat Applications with OpenAI &amp; LangChain</li>
+            <li>Vector Databases with Pinecone</li>
+            <li>Applied Text Mining in Python</li>
+            <li>LLM Zoomcamp <span>DataTalksClub</span></li>
           </ul>
-        </li>
-        <li class="tl-item">
-          <span class="tl-date">2023 — 2024</span>
-          <h3>Graduation Project: Visioneer</h3>
-          <p class="tl-org">Culture and Science City · with Ahmed Mostafa</p>
-          <ul>
-            <li>Fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans and shipped it in an Android app. Later published in <i>Machine Graphics &amp; Vision</i>.</li>
-          </ul>
-        </li>
-        <li class="tl-item">
-          <span class="tl-date">2020 — 2024</span>
-          <h3>B.Sc. Computer Science, Excellence with Honors</h3>
-          <p class="tl-org">Culture and Science City, Egypt</p>
-        </li>
-      </ol>
-
-      <h3 class="certs-title">Selected courses</h3>
-      <ul class="certs">
-        <li>Deep Learning Specialization <span>DeepLearning.AI</span></li>
-        <li>Machine Learning Specialization <span>Stanford · DeepLearning.AI</span></li>
-        <li>Mathematics for ML &amp; Data Science <span>DeepLearning.AI</span></li>
-        <li>Build Chat Applications with OpenAI &amp; LangChain</li>
-        <li>Vector Databases with Pinecone</li>
-        <li>Applied Text Mining in Python</li>
-        <li>LLM Zoomcamp <span>DataTalksClub</span></li>
-      </ul>
+        </aside>
+      </div>
     </div>
   </section>
 
   <!-- RESEARCH -->
-  <section class="section" id="research" aria-labelledby="res-h">
+  <section class="section section-tint" id="research" aria-labelledby="res-h">
     <div class="wrap">
-      <h2 class="sec-title" id="res-h"><span class="sec-num">06</span>Research</h2>
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <h2 id="res-h">Research</h2>
+        <span class="sec-ar" lang="ar">البحث العلمي</span>
+      </div>
       <article class="paper">
-        <span class="pill pill-accent">PUBLISHED · MACHINE GRAPHICS &amp; VISION 2025</span>
+        <p class="paper-venue">Machine Graphics &amp; Vision · Vol. 34, No. 3 · 2025 · peer-reviewed</p>
         <h3>Fine-tuning Stable Diffusion for Generating 2D Floor Plans Using Prompt Templates</h3>
-        <p class="pub-authors">A. Mostafa, <b>O. Amir</b>, A. M. Mohamed, M. O. Al Enany</p>
-        <p>We fine-tuned Stable Diffusion 1.5 on a custom floor plan dataset, using structured prompt templates to steer the model toward concise outputs that tolerate small errors. The paper also proposes combining diffusion models with graph neural networks, so that generated layouts respect how rooms connect to each other.</p>
-        <p class="pub-venue">Machine Graphics &amp; Vision, 34(3), 2025</p>
-        <a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Read the paper ↗</a>
+        <p class="paper-authors">A. Mostafa, <b>O. Amir</b>, A. M. Mohamed, M. O. Al Enany</p>
+        <p class="paper-abs">We fine-tuned Stable Diffusion 1.5 on a custom floor plan dataset, using structured prompt templates to steer the model toward concise outputs that tolerate small errors. The paper also proposes combining diffusion models with graph neural networks, so that generated layouts respect how rooms connect to each other.</p>
+        <a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Read the paper · doi.org/10.22630/MGV.2025.34.3.4</a>
       </article>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="section" id="contact" aria-labelledby="contact-h">
+  <section class="section contact" id="contact" aria-labelledby="contact-h">
     <div class="wrap">
-      <h2 class="sec-title" id="contact-h"><span class="sec-num">07</span>Contact</h2>
-      <div class="contact-box">
-        <h3>Need an engineer who builds agents that work in production?</h3>
-        <p>I'm happy to talk about AI, LLM and RAG engineering roles. The fastest way to reach me is by email.</p>
-        <div class="contact-grid">
-          <a class="contact-card" href="mailto:omaramir2001@gmail.com"><span>Email</span><b>omaramir2001@gmail.com</b></a>
-          <a class="contact-card" href="https://www.linkedin.com/in/omaramir55" target="_blank" rel="noopener"><span>LinkedIn</span><b>omaramir55</b></a>
-          <a class="contact-card" href="https://github.com/OmarAmir2001" target="_blank" rel="noopener"><span>GitHub</span><b>OmarAmir2001</b></a>
-          <a class="contact-card" href="https://huggingface.co/OmarAmir2001" target="_blank" rel="noopener"><span>Hugging Face</span><b>OmarAmir2001</b></a>
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <h2 id="contact-h">Contact</h2>
+        <span class="sec-ar" lang="ar">تواصل</span>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <p class="contact-big">Let's build something that <em>works in production.</em></p>
+          <p>I'm happy to talk about AI, LLM and RAG engineering roles, or anything else interesting. Email is the fastest way to reach me.</p>
+          <a class="btn btn-primary" href="assets/Omar_Amir_CV.pdf" download>Download CV</a>
         </div>
-        <a class="btn btn-primary" href="assets/Omar_Amir_CV.pdf" download>Download CV ↓</a>
+        <ul class="contact-list">
+          <li><a href="mailto:omaramir2001@gmail.com"><span>Email</span><b>omaramir2001@gmail.com</b></a></li>
+          <li><a href="https://www.linkedin.com/in/omaramir55" target="_blank" rel="noopener"><span>LinkedIn</span><b>in/omaramir55</b></a></li>
+          <li><a href="https://github.com/OmarAmir2001" target="_blank" rel="noopener"><span>GitHub</span><b>OmarAmir2001</b></a></li>
+          <li><a href="https://huggingface.co/OmarAmir2001" target="_blank" rel="noopener"><span>Hugging Face</span><b>OmarAmir2001</b></a></li>
+        </ul>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="footer">
-  <div class="wrap"><span class="ps">omar@rag</span>:<span class="pp">~</span>$ echo "© <span id="year">2026</span> Omar Amir"</div>
+  <div class="wrap footer-inner">
+    <span>© <span id="year">2026</span> Omar Amir</span>
+    <span class="ar" lang="ar">صُنع في مصر</span>
+  </div>
 </footer>
 
 <script src="script.js"></script>
