@@ -185,7 +185,7 @@
   document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else start(); });
 
   // Re-read colours when the theme changes.
-  new MutationObserver(readColors).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  new MutationObserver(readColors).observe(root, { attributes: true, attributeFilter: ["data-theme", "data-accent"] });
   var mq = window.matchMedia("(prefers-color-scheme: dark)");
   if (mq.addEventListener) mq.addEventListener("change", readColors);
 })();

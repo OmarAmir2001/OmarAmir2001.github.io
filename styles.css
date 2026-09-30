@@ -47,6 +47,16 @@
   color-scheme: dark;
 }
 
+/* ---------- Gem accents (emerald is the default above) ---------- */
+:root[data-accent="sapphire"] { --accent: #1d4f91; --accent-ink: #f5f1e8; --accent-soft: rgba(29, 79, 145, .08); }
+:root[data-accent="ruby"]     { --accent: #9e1c3f; --accent-ink: #f5f1e8; --accent-soft: rgba(158, 28, 63, .08); }
+:root[data-accent="sapphire"][data-theme="dark"] { --accent: #86aee8; --accent-ink: #0d1522; --accent-soft: rgba(134, 174, 232, .10); }
+:root[data-accent="ruby"][data-theme="dark"]     { --accent: #ef8aa0; --accent-ink: #230b12; --accent-soft: rgba(239, 138, 160, .10); }
+@media (prefers-color-scheme: dark) {
+  :root[data-accent="sapphire"]:not([data-theme="light"]) { --accent: #86aee8; --accent-ink: #0d1522; --accent-soft: rgba(134, 174, 232, .10); }
+  :root[data-accent="ruby"]:not([data-theme="light"])     { --accent: #ef8aa0; --accent-ink: #230b12; --accent-soft: rgba(239, 138, 160, .10); }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -387,3 +397,15 @@ main, .footer { position: relative; z-index: 1; }
 .motion-toggle.is-paused .i-pause { display: none; }
 .motion-toggle.is-paused .motion-hint { display: none; }
 @media (max-width: 600px) { .motion-hint { display: none; } .motion-toggle { padding: 0; width: 36px; justify-content: center; } }
+
+/* ---------- Gem picker ---------- */
+.gems { display: flex; align-items: center; gap: 6px; padding: 0 10px; height: 38px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.gems button {
+  width: 16px; height: 16px; padding: 0; border-radius: 50%; cursor: pointer;
+  background: var(--gem); border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line-strong);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.gems button:hover { transform: scale(1.15); }
+.gems button[aria-checked="true"] { box-shadow: 0 0 0 2px var(--ink); }
+@media (prefers-reduced-motion: reduce) { .gems button { transition: none; } .gems button:hover { transform: none; } }
+@media (max-width: 400px) { .gems { padding: 0 8px; gap: 5px; } .logo span { font-size: 17px; } }

@@ -11,6 +11,45 @@
     try { localStorage.setItem("theme", next); } catch (e) {}
   });
 
+  /* ---------- Gem accent ---------- */
+  var GEMS = { emerald: "#0e5e4f", sapphire: "#1d4f91", ruby: "#9e1c3f" };
+  var gemBtns = Array.prototype.slice.call(document.querySelectorAll(".gems [role=radio]"));
+  var favicon = document.querySelector("link[rel=icon]");
+
+  function setFavicon(hex) {
+    if (!favicon) return;
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'>" +
+      "<circle cx='17' cy='17' r='17' fill='" + hex + "'/>" +
+      "<circle cx='17' cy='17' r='8.5' fill='none' stroke='#f5f1e8' stroke-width='2.6'/>" +
+      "<circle cx='17' cy='17' r='2' fill='#f5f1e8' fill-opacity='.6'/>" +
+      "<circle cx='23' cy='11' r='3.2' fill='#e0a93c'/></svg>";
+    favicon.href = "data:image/svg+xml," + encodeURIComponent(svg);
+  }
+
+  function setGem(name, save) {
+    if (!GEMS[name]) name = "emerald";
+    if (name === "emerald") root.removeAttribute("data-accent"); else root.setAttribute("data-accent", name);
+    gemBtns.forEach(function (b) {
+      var on = b.getAttribute("data-accent") === name;
+      b.setAttribute("aria-checked", String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    setFavicon(GEMS[name]);
+    if (save) { try { localStorage.setItem("accent", name); } catch (e) {} }
+  }
+
+  gemBtns.forEach(function (b, i) {
+    b.addEventListener("click", function () { setGem(b.getAttribute("data-accent"), true); });
+    b.addEventListener("keydown", function (e) {
+      var d = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : (e.key === "ArrowLeft" || e.key === "ArrowUp") ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      var n = gemBtns[(i + d + gemBtns.length) % gemBtns.length];
+      n.focus(); n.click();
+    });
+  });
+  setGem(root.getAttribute("data-accent") || "emerald", false);
+
   /* ---------- Mobile menu ---------- */
   var menu = document.getElementById("menu");
   var menuBtn = document.querySelector(".menu-toggle");
