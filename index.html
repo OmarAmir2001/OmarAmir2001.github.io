@@ -42,10 +42,10 @@
     <nav id="menu" aria-label="Primary">
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#case-study">Case study</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#experience">Experience</a></li>
+        <li><a href="#certificates">Certificates</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="https://drive.google.com/drive/folders/1U2HhxZSjSQ4pOfdvn_nMvL00ECHtIh3C?usp=sharing" class="nav-cta" target="_blank" rel="noopener">View CV ↗</a></li>
@@ -79,7 +79,7 @@
         <p class="pitch">I build AI agents that <em>know when they're wrong.</em></p>
         <p class="intro">Most chatbots answer everything with the same confidence. The ones I build check their own answers with independent judges and <strong>hand the hard questions to a human</strong>. They also come with the tests and monitoring they need to run in production.</p>
         <div class="cta">
-          <a class="btn btn-primary" href="#case-study">Read the case study</a>
+          <a class="btn btn-primary" href="#projects">See my projects</a>
           <a class="btn btn-ghost" href="https://drive.google.com/drive/folders/1U2HhxZSjSQ4pOfdvn_nMvL00ECHtIh3C?usp=sharing" target="_blank" rel="noopener">View CV ↗</a>
         </div>
       </div>
@@ -155,188 +155,86 @@
           <div class="counter"><b data-count="5">5</b><span>end-to-end projects</span></div>
           <div class="counter"><b data-count="1">1</b><span>peer-reviewed paper</span></div>
           <div class="counter"><b data-count="100" data-suffix="+">100+</b><span>students mentored</span></div>
-          <div class="counter"><b data-count="115">115</b><span>tests in CI on my main project</span></div>
+          <div class="counter"><b data-count="30" data-suffix="+">30+</b><span>certificates earned</span></div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- CASE STUDY -->
-  <section class="section section-tint" id="case-study" aria-labelledby="cs-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="sec-num">02</span>
-        <h2 id="cs-h">Featured case study</h2>
-        <span class="sec-ar" lang="ar">المشروع الرئيسي</span>
-      </div>
-
-      <article class="feature">
-        <header class="feature-head">
-          <div class="feature-meta">
-            <span class="tag tag-accent">LLM · RAG · Human-in-the-loop</span>
-            <a class="ci" href="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml" target="_blank" rel="noopener"><img src="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml/badge.svg" alt="CI status" loading="lazy" height="20"></a>
-          </div>
-          <h3>Handbook Assistant</h3>
-          <p class="feature-sub">A customer support agent that knows when to ask a human.</p>
-          <p class="lead">A support agent for a computer science institute. It answers student questions from the CS and IS handbooks, and when it can't answer confidently it <strong>opens a ticket for a human advisor instead of guessing</strong>. When the advisor replies, the answer goes back into the student's conversation, and the advisor can add it to the knowledge base so the same question is answered automatically next time.</p>
-          <a class="btn btn-primary" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener">View the code on GitHub</a>
-        </header>
-
-        <div class="cs-intro">
-          <div>
-            <h4>The problem</h4>
-            <p>Students ask about registration, GPA rules and graduation requirements, and the answers are in two long handbooks, partly in Arabic. A normal RAG chatbot answers every question with the same confidence, even when retrieval found nothing useful. On academic rules, <strong>a confident wrong answer does more harm than "let me ask an advisor."</strong></p>
-          </div>
-          <div>
-            <h4>What I built</h4>
-            <p>An agent that <strong>answers only when three separate checks agree it should</strong>, backed by a ticket system that survives restarts, a learning loop where the advisor decides what gets added, and the monitoring to run it all in production.</p>
-          </div>
-        </div>
-
-        <div class="cs-diagrams">
-          <figure class="panel" aria-label="How the agent handles a question">
-            <figcaption>How the agent handles a question</figcaption>
-            <ol class="flow-steps">
-              <li><span class="n">1</span><div><b>Retrieve</b><small>pgvector search, filtered by the student's department, handbook first</small></div></li>
-              <li class="is-gate"><span class="n">G1</span><div><b>Context relevance</b><small>checked before generating: do the excerpts cover the question at all?</small></div></li>
-              <li><span class="n">2</span><div><b>Generate</b><small>an answer built only from the retrieved excerpts</small></div></li>
-              <li class="is-gate"><span class="n">G2</span><div><b>Faithfulness + answer relevance</b><small>run in parallel: is every claim supported, and does it answer the question asked?</small></div></li>
-              <li class="is-ok"><span class="n">✓</span><div><b>Answer the student</b><small>only when every gate passes</small></div></li>
-            </ol>
-            <div class="flow-branch">
-              <span class="arrow" aria-hidden="true">↳</span>
-              <div><b>Any gate fails → escalate</b><small>Write a ticket with the question, the gate that failed and why, and the excerpts the bot saw. Then the run ends.</small></div>
-            </div>
-          </figure>
-
-          <figure class="panel" aria-label="Ticket lifecycle">
-            <figcaption>After escalation (hours or days later)</figcaption>
-            <ol class="lifecycle">
-              <li><span class="state s-pending">pending</span><small>waiting in the advisor queue</small></li>
-              <li><span class="state s-review">under_review</span><small>an advisor claims it, or releases it back</small></li>
-              <li><span class="state s-ok">resolved</span><small>the answer goes back into the student's conversation by <code>thread_id</code></small></li>
-              <li><span class="state s-kb">+ promote_to_kb</span><small>optional: the advisor adds the answer to pgvector as <code>instructor_resolved</code></small></li>
-            </ol>
-            <p class="lifecycle-note">Also <span class="state s-mute">rejected</span> <span class="state s-mute">closed</span> <span class="state s-mute">reopened</span>. Every change is logged with who made it. If two advisors act at once, the second gets a <code>409</code> instead of silently overwriting the first.</p>
-          </figure>
-        </div>
-
-        <h4 class="decisions-title">Six decisions I'd defend in a design review</h4>
-        <ol class="decisions">
-          <li>
-            <h5>Separate judges, not a confidence score</h5>
-            <p>Models are poorly calibrated when asked to rate their own confidence. Instead, three single-purpose judges each check something different against different evidence. The answer-relevance judge is deliberately <em>not shown</em> the excerpts, so it can catch an answer that is well grounded but answers the wrong question.</p>
-          </li>
-          <li>
-            <h5>Judges fail closed</h5>
-            <p>If a judge returns output it can't parse, or can't be reached, the question escalates. A judge that failed open would let answers through exactly when the checking system is broken.</p>
-          </li>
-          <li>
-            <h5>Escalation ends the run</h5>
-            <p>Nothing stays paused in memory waiting for a human who might take days. An open ticket is just a database row, so it survives restarts and scales. The student sees the advisor's reply on their next visit.</p>
-          </li>
-          <li>
-            <h5>The advisor decides what the agent learns</h5>
-            <p>Resolving a ticket and adding its answer to the knowledge base are separate steps. One judge suggests whether the answer is general enough to reuse, and another holds back any answer that contradicts the handbook. Handbook text always ranks first.</p>
-          </li>
-          <li>
-            <h5>One source of truth</h5>
-            <p>Postgres holds tickets, chunks and conversation history. The pgvector index is rebuilt from it and can be dropped and pushed again without losing anything. Syncing deletes and re-inserts by a stable key, so it never creates duplicates.</p>
-          </li>
-          <li>
-            <h5>Thin nodes, logic in controllers</h5>
-            <p>Each LangGraph node calls one controller method. The advisor's HTTP endpoint calls the same controller as the graph, and all 115 tests run without a database, API keys or the graph.</p>
-          </li>
-        </ol>
-
-        <div class="prod">
-          <blockquote class="prod-quote">
-            <p>"If the model provider goes down, every question escalates, while <code>/chat</code> still returns 200 with normal latency. A standard dashboard would look perfectly healthy."</p>
-            <footer>That's the failure I designed the monitoring around.</footer>
-          </blockquote>
-          <div class="prod-body">
-            <p>So I added metrics specific to this system. <code>judge_failures_total{gate}</code> is the only signal that separates "the provider is down" from "retrieval is bad," two problems that need opposite fixes.</p>
-            <ul class="prod-list">
-              <li><b>Observability</b><span>Prometheus and Grafana, 7 alert rules checked with <code>promtool</code>, metrics labelled by route template so the number of series stays bounded, and JSON logs with a correlation ID for each conversation</span></li>
-              <li><b>Infrastructure</b><span>Docker Compose with one command (<code>make up</code>), nginx as the only public port, Alembic migrations on startup, and memory limits on every service</span></li>
-              <li><b>Correctness</b><span>A ticket state machine with an audit trail, optimistic locking that returns a 409 on conflict, and idempotent syncing to the vector index</span></li>
-              <li><b>Testing</b><span>115 tests in GitHub Actions, plus Locust load profiles</span></li>
-            </ul>
-          </div>
-        </div>
-
-        <ul class="chips" aria-label="Technologies">
-          <li>LangGraph</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>Pydantic v2</li><li>Groq · gpt-oss</li><li>Cohere</li><li>Prometheus</li><li>Grafana</li><li>nginx</li><li>Docker</li><li>pytest</li><li>uv</li>
-        </ul>
-      </article>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section class="section" id="projects" aria-labelledby="proj-h">
+  <section class="section section-tint" id="projects" aria-labelledby="proj-h">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">03</span>
-        <h2 id="proj-h">More projects</h2>
-        <span class="sec-ar" lang="ar">مشاريع أخرى</span>
+        <span class="sec-num">02</span>
+        <h2 id="proj-h">Projects</h2>
+        <span class="sec-ar" lang="ar">المشاريع</span>
       </div>
-
-      <article class="mizan">
-        <div class="mizan-copy">
-          <span class="tag tag-accent">LLM · RAG · Arabic NLP · Live demo</span>
+      <p class="sec-lead">Five projects across LLM agents, NLP, generative vision and classical ML. Each one links to its code.</p>
+      <div class="projects">
+        <article class="proj">
+          <div class="proj-top"><span class="tag tag-accent">LLM · RAG · Human-in-the-loop</span><a class="ci" href="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml" target="_blank" rel="noopener"><img src="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml/badge.svg" alt="CI status" loading="lazy" height="20"></a></div>
+          <h3>Handbook Assistant</h3>
+          <p class="proj-sub">A customer support agent that knows when to ask a human</p>
+          <p class="proj-desc">Answers student questions from the CS and IS handbooks, and opens a ticket for a human advisor when it can't answer confidently.</p>
+          <div class="flow" aria-label="Pipeline"><span class="st">retrieve</span><i aria-hidden="true">→</i><span class="st st-gate">gate: context</span><i aria-hidden="true">→</i><span class="st">generate</span><i aria-hidden="true">→</i><span class="st st-gate">gate: faithful ∥ relevant</span><i aria-hidden="true">→</i><span class="st st-ok">answer</span><span class="st st-esc">↳ else escalate</span></div>
+          <ul class="proj-points"><li>Three independent LLM judges decide when to escalate, and they fail closed if they break.</li><li>Tickets survive restarts, and the advisor's reply goes back into the student's conversation by <code>thread_id</code>.</li><li>Advisors choose which answers join the knowledge base, and handbook text always ranks first.</li></ul>
+          <div class="stat-row"><div><b>3</b><span>judge gates</span></div><div><b>115</b><span>tests in CI</span></div></div>
+          <ul class="chips"><li>LangGraph</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>Docker</li><li>Prometheus</li></ul>
+          <div class="proj-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>Code</a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-top"><span class="tag tag-accent">LLM · RAG · Arabic NLP</span><span class="proj-badge badge-live">Live demo</span></div>
           <h3><span class="mizan-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path class="mm-post" d="M32 14v34M20 50h24"/><g class="mm-beam"><path d="M14 20h36"/><path d="M14 20l-7 14h14zM50 20l-7 14h14z"/></g><circle cx="32" cy="14" r="3"/></svg></span>Mizan <span class="ar" lang="ar">ميزان</span></h3>
-          <p class="mizan-def"><i>mīzān</i>, noun: a balance; a pair of scales.</p>
-          <p>An agentic RAG assistant that answers questions about Egyptian labor law in <strong>Arabic and English</strong>. It is built as a stateful LangGraph graph: it grades what it retrieves, and when the results are weak it rewrites the question into more precise legal wording and searches again. Trustcall remembers each user across sessions, and Groq-hosted Llama 3.3 70B keeps answers fast.</p>
-          <ul class="chips"><li>LangGraph</li><li>ChromaDB</li><li>Llama 3.3 70B · Groq</li><li>multilingual-e5</li><li>Trustcall</li><li>Gradio</li></ul>
-          <div class="card-links">
-            <a class="btn btn-primary btn-sm" href="https://huggingface.co/spaces/OmarAmir2001/mizan" target="_blank" rel="noopener">Try the live demo ↗</a>
-            <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/mizan" target="_blank" rel="noopener">Code</a>
-          </div>
-        </div>
-        <ol class="loop" aria-label="Mizan's corrective RAG loop">
-          <li>Load the user's profile</li>
-          <li>Retrieve from ChromaDB</li>
-          <li class="is-gate">Grade each passage</li>
-          <li>Generate a personalized answer</li>
-          <li>Save what it learned about the user</li>
-          <li class="loop-back">↺ If the results are weak, rewrite the question and search again</li>
-        </ol>
-      </article>
-
-      <div class="cards">
-        <article class="card">
-          <span class="tag">Generative vision · Published</span>
-          <h3>Visioneer</h3>
-          <p>My graduation project. I fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans, using structured prompt templates, and shipped it in an Android app that generates floor plan designs.</p>
-          <div class="stat-row"><div><b>12k+</b><span>training samples</span></div><div><b>SD 1.5</b><span>base model</span></div></div>
-          <div class="card-links">
-            <a href="https://github.com/OmarAmir2001/VISIONEER_APP" target="_blank" rel="noopener">Code →</a>
-            <a href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Paper →</a>
-          </div>
+          <p class="proj-sub">An Egyptian labor law assistant</p>
+          <p class="proj-desc">Answers questions about Egyptian labor law in Arabic and English, grounded in the text of the law. <i>Mīzān</i> means "balance" in Arabic.</p>
+          <div class="flow" aria-label="Pipeline"><span class="st">load profile</span><i aria-hidden="true">→</i><span class="st">retrieve</span><i aria-hidden="true">→</i><span class="st st-gate">grade</span><i aria-hidden="true">→</i><span class="st">generate</span><i aria-hidden="true">→</i><span class="st st-ok">save profile</span><span class="st st-esc">↺ rewrite if weak</span></div>
+          <ul class="proj-points"><li>A corrective RAG loop grades each retrieved passage and rewrites the question when results are weak.</li><li>Remembers each user across sessions with Trustcall.</li><li>Deployed as a Gradio app on Hugging Face Spaces.</li></ul>
+          <div class="stat-row"><div><b>AR + EN</b><span>languages</span></div><div><b>Llama 3.3 70B</b><span>via Groq</span></div></div>
+          <ul class="chips"><li>LangGraph</li><li>ChromaDB</li><li>Groq</li><li>multilingual-e5</li><li>Trustcall</li><li>Gradio</li></ul>
+          <div class="proj-links"><a class="btn btn-primary btn-sm" href="https://huggingface.co/spaces/OmarAmir2001/mizan" target="_blank" rel="noopener">Live demo ↗</a><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/mizan" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>Code</a></div>
         </article>
-        <article class="card">
-          <span class="tag">LLM pipeline</span>
+        <article class="proj">
+          <div class="proj-top"><span class="tag tag-accent">LLM pipeline</span><span class="proj-badge">REST API</span></div>
           <h3>GitHub Repository Q&amp;A Agent</h3>
-          <p>A complete LLM pipeline (ingestion, retrieval and deployment) that answers questions about a code repository. It runs behind a REST API and is containerized with Docker.</p>
+          <p class="proj-sub">Ask questions about a codebase</p>
+          <p class="proj-desc">An end-to-end LLM pipeline that ingests a code repository and answers questions about it, served through a REST API.</p>
+          <div class="flow" aria-label="Pipeline"><span class="st">ingest repo</span><i aria-hidden="true">→</i><span class="st">retrieve</span><i aria-hidden="true">→</i><span class="st">answer</span><i aria-hidden="true">→</i><span class="st st-ok">serve via API</span></div>
+          <ul class="proj-points"><li>Covers the whole pipeline: ingestion, retrieval and deployment.</li><li>Serves answers through a REST API with responses under 200 ms.</li><li>Containerized with Docker so it runs the same everywhere.</li></ul>
           <div class="stat-row"><div><b>&lt;200 ms</b><span>API responses</span></div><div><b>Docker</b><span>reproducible</span></div></div>
-          <div class="card-links"><a href="https://github.com/OmarAmir2001/GitHub-Repository-Q-A-Agent" target="_blank" rel="noopener">Code →</a></div>
+          <ul class="chips"><li>LangChain</li><li>Docker</li><li>REST API</li><li>Python</li></ul>
+          <div class="proj-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/GitHub-Repository-Q-A-Agent" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>Code</a></div>
         </article>
-        <article class="card">
-          <span class="tag">Classical ML</span>
+        <article class="proj">
+          <div class="proj-top"><span class="tag tag-accent">Generative vision · Published</span><span class="proj-badge badge-pub">Peer-reviewed</span></div>
+          <h3>Visioneer</h3>
+          <p class="proj-sub">Floor plans from text prompts</p>
+          <p class="proj-desc">My graduation project: an Android app that generates floor plan designs with a fine-tuned Stable Diffusion model.</p>
+          <div class="flow" aria-label="Pipeline"><span class="st">prompt template</span><i aria-hidden="true">→</i><span class="st">fine-tuned SD 1.5</span><i aria-hidden="true">→</i><span class="st">floor plan</span><i aria-hidden="true">→</i><span class="st st-ok">Android app</span></div>
+          <ul class="proj-points"><li>Fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans.</li><li>Structured prompt templates steer the model toward usable layouts.</li><li>Published in <i>Machine Graphics &amp; Vision</i> (2025).</li></ul>
+          <div class="stat-row"><div><b>12k+</b><span>training samples</span></div><div><b>SD 1.5</b><span>base model</span></div></div>
+          <ul class="chips"><li>Stable Diffusion</li><li>PyTorch</li><li>Hugging Face</li><li>Android</li></ul>
+          <div class="proj-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/VISIONEER_APP" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>Code</a><a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Paper ↗</a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-top"><span class="tag tag-accent">Classical ML</span><span class="proj-badge">Tabular data</span></div>
           <h3>Reservation Cancellation Prediction</h3>
-          <p>A supervised model trained on more than 10,000 records to predict booking cancellations, improved with feature engineering and hyperparameter tuning.</p>
+          <p class="proj-sub">Which bookings will be cancelled?</p>
+          <p class="proj-desc">A supervised model that predicts booking cancellations from reservation data.</p>
+          <div class="flow" aria-label="Pipeline"><span class="st">features</span><i aria-hidden="true">→</i><span class="st">model</span><i aria-hidden="true">→</i><span class="st">tune</span><i aria-hidden="true">→</i><span class="st st-ok">predict</span></div>
+          <ul class="proj-points"><li>Trained on more than 10,000 reservation records.</li><li>Feature engineering and hyperparameter tuning raised F1 by 12%.</li></ul>
           <div class="stat-row"><div><b>85%</b><span>accuracy</span></div><div><b>+12%</b><span>F1 from tuning</span></div></div>
-          <div class="card-links"><a href="https://github.com/OmarAmir2001/reservation-cancellation-prediction" target="_blank" rel="noopener">Code →</a></div>
+          <ul class="chips"><li>scikit-learn</li><li>Feature engineering</li><li>Python</li></ul>
+          <div class="proj-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/reservation-cancellation-prediction" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>Code</a></div>
         </article>
       </div>
     </div>
   </section>
 
   <!-- SKILLS -->
-  <section class="section section-tint" id="skills" aria-labelledby="skills-h">
+  <section class="section" id="skills" aria-labelledby="skills-h">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">04</span>
+        <span class="sec-num">03</span>
         <h2 id="skills-h">Skills</h2>
         <span class="sec-ar" lang="ar">المهارات</span>
       </div>
@@ -375,10 +273,10 @@
   </section>
 
   <!-- EXPERIENCE -->
-  <section class="section" id="experience" aria-labelledby="exp-h">
+  <section class="section section-tint" id="experience" aria-labelledby="exp-h">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">05</span>
+        <span class="sec-num">04</span>
         <h2 id="exp-h">Experience &amp; education</h2>
         <span class="sec-ar" lang="ar">الخبرة والتعليم</span>
       </div>
@@ -402,18 +300,133 @@
             <p class="tl-org">Culture and Science City, Egypt</p>
           </li>
         </ol>
-        <aside class="courses">
-          <h3>Selected courses</h3>
-          <ul>
-            <li>Deep Learning Specialization <span>DeepLearning.AI</span></li>
-            <li>Machine Learning Specialization <span>Stanford · DeepLearning.AI</span></li>
-            <li>Mathematics for ML &amp; Data Science <span>DeepLearning.AI</span></li>
-            <li>Build Chat Applications with OpenAI &amp; LangChain</li>
-            <li>Vector Databases with Pinecone</li>
-            <li>Applied Text Mining in Python</li>
-            <li>LLM Zoomcamp <span>DataTalksClub</span></li>
-          </ul>
-        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATES -->
+  <section class="section" id="certificates" aria-labelledby="cert-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <h2 id="cert-h">Certificates</h2>
+        <span class="sec-ar" lang="ar">الشهادات</span>
+      </div>
+      <ul class="certs">
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Deep Learning Specialization</h3>
+              <p class="cert-meta">DeepLearning.AI · Coursera <span>·</span> Aug 2024</p>
+              <p class="cert-kind">5-course specialization</p>
+              <p class="cert-subs"><span>Course certificates:</span> <a href="https://drive.google.com/file/d/129iNEJh70C8wnflp0CKYDV6M4hggvzce/view" target="_blank" rel="noopener">Neural Networks and Deep Learning</a> · <a href="https://drive.google.com/file/d/1W6DLLVswhw1HxFcrll_N8W92_9_aV5CD/view" target="_blank" rel="noopener">Improving Deep Neural Networks</a> · <a href="https://drive.google.com/file/d/1iM6UDOYJx9fTflEGAFBuu8KffFz8Vrp9/view" target="_blank" rel="noopener">Structuring ML Projects</a> · <a href="https://drive.google.com/file/d/1ugJOg-D4kPO6KWduxqX-s6D90w7_C47w/view" target="_blank" rel="noopener">Convolutional Neural Networks</a></p>
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1KOjxYqYWAhBkRzauGehIIncqgcDcurwg/view" target="_blank" rel="noopener">View certificate ↗</a><a href="https://coursera.org/verify/specialization/ZAE2HKMGWOKR" target="_blank" rel="noopener">Verify ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Machine Learning Specialization</h3>
+              <p class="cert-meta">DeepLearning.AI &amp; Stanford · Coursera <span>·</span> Aug 2023</p>
+              <p class="cert-kind">3-course specialization</p>
+              <p class="cert-subs"><span>Course certificates:</span> <a href="https://drive.google.com/file/d/1LbjNKeOiNF_cNCrAkHTlIIZeOv_WenBT/view" target="_blank" rel="noopener">Advanced Learning Algorithms</a></p>
+              <div class="cert-links"><a href="https://drive.google.com/file/d/18DXXJI4OEuj9ftK6Z6BdLNDna_eClM9I/view" target="_blank" rel="noopener">View certificate ↗</a><a href="https://coursera.org/verify/specialization/JKYDB3PF5CYY" target="_blank" rel="noopener">Verify ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Mathematics for ML &amp; Data Science</h3>
+              <p class="cert-meta">DeepLearning.AI · Coursera <span>·</span> Jul 2023</p>
+              <p class="cert-kind">3-course specialization</p>
+              <p class="cert-subs"><span>Course certificates:</span> <a href="https://drive.google.com/file/d/1q9_GUJn2h7k1AIkQRyK1gKALnTffkBy-/view" target="_blank" rel="noopener">Linear Algebra</a> · <a href="https://drive.google.com/file/d/1BZiIiBLERwogz3a9S80c6F3ilQXj1PT7/view" target="_blank" rel="noopener">Calculus</a> · <a href="https://drive.google.com/file/d/14GiiTP6mzZTMI6q15gM9sMGLlI08AMCQ/view" target="_blank" rel="noopener">Probability &amp; Statistics</a></p>
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1ZzgN4u9d9kUQcFSlUerzllTQYpYyN9Nj/view" target="_blank" rel="noopener">View certificate ↗</a><a href="https://coursera.org/verify/specialization/D7YKBVCK4K36" target="_blank" rel="noopener">Verify ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Machine Learning Zoomcamp</h3>
+              <p class="cert-meta">DataTalks.Club <span>·</span> Feb 2026</p>
+              <p class="cert-kind">Project-based course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1vQT4ixLoNobh7jcw86GtUnn70UUzU0P1/view" target="_blank" rel="noopener">View certificate ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Introduction to LangGraph</h3>
+              <p class="cert-meta">LangChain Academy <span>·</span> May 2026</p>
+              <p class="cert-kind">Foundation course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/15MXg54eBhDtW51tQBs6JRX4ob6UIVcLz/view" target="_blank" rel="noopener">View certificate ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Introduction to LangChain</h3>
+              <p class="cert-meta">LangChain Academy <span>·</span> May 2026</p>
+              <p class="cert-kind">Foundation course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1P3HzWOw1LPcMtinHtjO86o3Atj2ickx3/view" target="_blank" rel="noopener">View certificate ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>NLP with Classification and Vector Spaces</h3>
+              <p class="cert-meta">DeepLearning.AI · Coursera <span>·</span> Sep 2024</p>
+              <p class="cert-kind">Course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1jEn2KLNUi2HCOmPNc__1zX1ROoqHtDWK/view" target="_blank" rel="noopener">View certificate ↗</a><a href="https://coursera.org/verify/7B0AZJ3YTDTX" target="_blank" rel="noopener">Verify ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Build Chat Applications with OpenAI and LangChain</h3>
+              <p class="cert-meta">365 Data Science <span>·</span> Nov 2024</p>
+              <p class="cert-kind">Course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1LS_5Yt1kX-IJAK3xkfTVx4djpmq6z0mX/view" target="_blank" rel="noopener">View certificate ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Introduction to Vector Databases with Pinecone</h3>
+              <p class="cert-meta">365 Data Science <span>·</span> Nov 2024</p>
+              <p class="cert-kind">Course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1hFmG3rsdSAG32qE6I7ve6MI1orh8gIXB/view" target="_blank" rel="noopener">View certificate ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Browser-based Models with TensorFlow.js</h3>
+              <p class="cert-meta">DeepLearning.AI · Coursera <span>·</span> Sep 2024</p>
+              <p class="cert-kind">Course</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1VwLVFfQgdKW54ElA24WwxWu8I34GSSHT/view" target="_blank" rel="noopener">View certificate ↗</a><a href="https://coursera.org/verify/7QWX96VEZ52E" target="_blank" rel="noopener">Verify ↗</a></div>
+            </div>
+          </li>
+          <li class="cert">
+            <span class="cert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.8L7 22l5-3 5 3-1.5-8.2"/></svg></span>
+            <div class="cert-body">
+              <h3>Data Analyst with Python</h3>
+              <p class="cert-meta">DataCamp <span>·</span> Feb 2023</p>
+              <p class="cert-kind">36-hour career track</p>
+              
+              <div class="cert-links"><a href="https://drive.google.com/file/d/1wItXi0dCpinIN4j0hL7zFMVUgwXuONV5/view" target="_blank" rel="noopener">View certificate ↗</a></div>
+            </div>
+          </li>
+      </ul>
+      <div class="more-certs">
+        <h3>More from DataCamp</h3>
+        <ul><li><a href="https://drive.google.com/file/d/1mGCr0abJhc0u9M7KcZAhC8hTC9W3shpj/view" target="_blank" rel="noopener">Data Quality with Great Expectations</a></li><li><a href="https://drive.google.com/file/d/1EStOEU0HhDzBsqDxIMWqd-CqXnPl7gxo/view" target="_blank" rel="noopener">Supervised Learning with scikit-learn</a></li><li><a href="https://drive.google.com/file/d/19uXgGWK0mPHBiBDTd_ejE5VZEaRio7vZ/view" target="_blank" rel="noopener">Unsupervised Learning in Python</a></li><li><a href="https://drive.google.com/file/d/1dd3y7gpWQsFxfLOTm3OPxpdEZdrDgZVe/view" target="_blank" rel="noopener">Linear Classifiers in Python</a></li><li><a href="https://drive.google.com/file/d/1roO0_iQccJY1yUkD3O9FpKkh9smP9I-U/view" target="_blank" rel="noopener">Intermediate Python</a></li><li><a href="https://drive.google.com/file/d/1aKh6DbAbJUEPUson8eBcJ2UtGNWEewWW/view" target="_blank" rel="noopener">Introduction to Data Science in Python</a></li><li><a href="https://drive.google.com/file/d/1CHezoxusAK_-yFhouCN0IqkEra46H9nG/view" target="_blank" rel="noopener">Data Manipulation with pandas</a></li><li><a href="https://drive.google.com/file/d/1hiQFaakXlPmPt_ke4uWplVMoXh9U77O_/view" target="_blank" rel="noopener">Joining Data with pandas</a></li><li><a href="https://drive.google.com/file/d/16UbryQf6JeKhY0W_C7WaCsSQZ9czsm90/view" target="_blank" rel="noopener">Introduction to Statistics in Python</a></li><li><a href="https://drive.google.com/file/d/1nQSyHcp2r403iVTbVXctNNDvUn4w06zL/view" target="_blank" rel="noopener">Data Visualization with Seaborn</a></li><li><a href="https://drive.google.com/file/d/1EZlAm3xhFvud5kh3g0HTvON97qMGzq_b/view" target="_blank" rel="noopener">Exploratory Data Analysis in Python</a></li><li><a href="https://drive.google.com/file/d/1jS36fXtTiTn3QSfh_K-ZQ2S3snH9W_D5/view" target="_blank" rel="noopener">Sampling in Python</a></li><li><a href="https://drive.google.com/file/d/1dy4vbXSukgeJlkErxXsN_kT84c2wCu0v/view" target="_blank" rel="noopener">Hypothesis Testing in Python</a></li></ul>
       </div>
     </div>
   </section>

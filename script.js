@@ -189,7 +189,7 @@
   }
 
   if ("IntersectionObserver" in window && !reduceMotion) {
-    var targets = document.querySelectorAll(".sec-head, .about-text, .counter, .feature-head, .cs-intro, .cs-diagrams, .decisions li, .prod, .mizan, .card, .core-stack, .skill, .timeline li, .courses, .paper, .contact-grid");
+    var targets = document.querySelectorAll(".sec-head, .about-text, .counter, .proj, .core-stack, .skill, .timeline li, .cert, .more-certs, .paper, .contact-grid");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
