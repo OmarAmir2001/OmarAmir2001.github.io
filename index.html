@@ -9,357 +9,397 @@
 <meta property="og:description" content="Production RAG agents that check their own answers and hand hard questions to a human.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://omaramir2001.github.io/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f766e'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-weight='700' font-size='28' text-anchor='middle' fill='%23fff'%3EOA%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0a0e12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e12'/%3E%3Ctext x='32' y='42' font-family='monospace' font-weight='700' font-size='26' text-anchor='middle' fill='%232dd4bf'%3E%3E_%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script>
-  // Apply the saved theme before first paint to avoid a flash.
   try {
     var t = localStorage.getItem("theme");
-    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    if (t === "light") document.documentElement.setAttribute("data-theme", "light");
   } catch (e) {}
+  document.documentElement.classList.add("js");
 </script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<canvas id="field" aria-hidden="true"></canvas>
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="#top" aria-label="Omar Amir, home"><span class="logo-mark">OA</span><span class="logo-text">Omar Amir</span></a>
-    <nav aria-label="Primary">
+    <a class="logo" href="#top" aria-label="Omar Amir, home"><span class="logo-prompt">&gt;_</span>omar</a>
+    <nav id="menu" aria-label="Primary">
       <ul class="nav-links">
-        <li><a href="#case-study">Case study</a></li>
-        <li><a href="#work">Work</a></li>
-        <li class="hide-sm"><a href="#experience">Experience</a></li>
-        <li class="hide-sm"><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about"><span>01</span>About</a></li>
+        <li><a href="#case-study"><span>02</span>Case study</a></li>
+        <li><a href="#projects"><span>03</span>Projects</a></li>
+        <li><a href="#skills"><span>04</span>Skills</a></li>
+        <li><a href="#experience"><span>05</span>Experience</a></li>
+        <li><a href="#research"><span>06</span>Research</a></li>
+        <li><a href="#contact"><span>07</span>Contact</a></li>
       </ul>
     </nav>
-    <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
-      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-    </button>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" aria-label="Toggle light mode">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
 <main id="main">
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="wrap hero-inner">
-      <p class="eyebrow"><span class="dot" aria-hidden="true"></span> AI Engineer · LLM &amp; RAG · NLP</p>
-      <h1>I build LLM agents that <em>know when they're wrong.</em></h1>
-      <p class="lede">I'm Omar Amir, an AI engineer in 6th of October, Giza. My main project is a <strong>production-grade customer support agent</strong>. It answers from a knowledge base, runs three independent judges over every answer, and hands anything it isn't sure of to a human advisor. When the advisor answers, the agent can learn that answer too.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="#case-study">Read the case study</a>
-        <a class="btn btn-ghost" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
-          Source code
-        </a>
+    <div class="wrap">
+      <div class="term" role="region" aria-label="Introduction">
+        <div class="term-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="term-title">~/handbook-assistant — bash</span>
+        </div>
+        <div class="term-body">
+          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>whoami</span></div>
+          <div class="t-out"><h1 class="name">Omar Amir</h1></div>
+
+          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>cat role.txt</span></div>
+          <div class="t-out"><p class="role">AI Engineer · LLM &amp; RAG · NLP<span class="caret" aria-hidden="true"></span></p></div>
+
+          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>./about --short</span></div>
+          <div class="t-out"><p class="about-short">I build <b class="hl">LLM agents that know when they're wrong</b>: <b class="hl">RAG</b> pipelines that check their own answers, <b class="hl">escalate to a human</b> when they aren't sure, and ship with the tests and monitoring that production needs. Published researcher, and a teaching assistant who has mentored more than 100 students.</p></div>
+
+          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>./agent ask "Can I register 21 credit hours this term?"</span></div>
+          <div class="t-out trace">
+            <p class="tr-comment"># sample run of the Handbook Assistant</p>
+            <p><span class="tr-k">retrieve</span>            5 chunks · dept=CS · handbook first <span class="ok">✓</span></p>
+            <p><span class="tr-k">gate.context_rel</span>    0.34 &lt; 0.50 <span class="bad">✗ fail</span></p>
+            <p><span class="tr-k">escalate</span>            ticket <span class="tk">pending</span> · run ended <span class="warn">→ advisor</span></p>
+          </div>
+
+          <div class="t-line"><span class="ps">omar@rag</span><span class="pc">:</span><span class="pp">~</span><span class="pd">$</span> <span class="cmd" data-type>ls quick_links/</span></div>
+          <div class="t-out">
+            <div class="cta">
+              <a class="btn btn-primary" href="#case-study">See the case study <span aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#contact">Get in touch</a>
+              <a class="btn btn-ghost" href="assets/Omar_Amir_CV.pdf" download>Download CV</a>
+            </div>
+          </div>
+        </div>
       </div>
-      <dl class="stats">
-        <div><dt>Independent judge gates</dt><dd>3</dd></div>
-        <div><dt>Tests in CI</dt><dd>115</dd></div>
-        <div><dt>Prometheus alert rules</dt><dd>7</dd></div>
-        <div><dt>To run the whole stack</dt><dd><code class="dd-code">make up</code></dd></div>
+
+      <dl class="strip">
+        <div><dt>Location</dt><dd>6th of October, Giza · Egypt</dd></div>
+        <div><dt>Currently</dt><dd><span class="dot" aria-hidden="true"></span>Teaching Assistant · building agents</dd></div>
+        <div><dt>Stack</dt><dd>LangGraph · FastAPI · pgvector</dd></div>
       </dl>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <h2 class="sec-title" id="about-h"><span class="sec-num">01</span>About</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm Omar, an AI engineer who likes owning a system from start to finish: <strong>ingestion and retrieval design, evaluation and escalation logic, and the deployment and monitoring</strong> that keep it working once real users arrive.</p>
+          <p>I got into AI through generative vision. For my graduation project I fine-tuned Stable Diffusion to generate floor plans, and that work became a <strong>peer-reviewed paper</strong> in <i>Machine Graphics &amp; Vision</i>. Since then I've focused on language: RAG, agents built with LangGraph, and working with <strong>both Arabic and English</strong>.</p>
+          <p>I care about decisions I can defend. That means one source of truth, judges that fail safe, metrics that show the system's own failure modes, and code I can test without starting the whole stack. As a teaching assistant, I explain those choices to students every week.</p>
+        </div>
+        <div class="counters">
+          <div class="counter"><b data-count="5">5</b><span>end-to-end<br>projects</span></div>
+          <div class="counter"><b data-count="1">1</b><span>peer-reviewed<br>publication</span></div>
+          <div class="counter"><b data-count="100" data-suffix="+">100+</b><span>students<br>mentored</span></div>
+          <div class="counter"><b data-count="115">115</b><span>tests in CI on<br>my main project</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- CASE STUDY -->
   <section class="section" id="case-study" aria-labelledby="cs-h">
     <div class="wrap">
-      <header class="section-head">
-        <p class="kicker">01 · Featured case study</p>
-        <h2 id="cs-h">Handbook Assistant: a customer support agent that knows when to ask a human</h2>
-        <div class="cs-meta">
-          <a class="ci" href="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml" target="_blank" rel="noopener"><img src="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml/badge.svg" alt="CI status" loading="lazy" height="20"></a>
-          <span class="badge badge-live">Runs end to end</span>
-          <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener">View on GitHub →</a>
-        </div>
-      </header>
+      <h2 class="sec-title" id="cs-h"><span class="sec-num">02</span>Featured case study</h2>
 
-      <div class="cs-intro">
-        <div>
-          <h3 class="cs-h3">The problem</h3>
-          <p>Students ask about registration, GPA rules and graduation requirements, and the answers are in two long department handbooks (CS and IS), partly in Arabic. A normal RAG chatbot answers every question with the same confidence, even when retrieval found nothing useful. On academic rules, <strong>a confident wrong answer does more harm than "let me ask an advisor."</strong></p>
-        </div>
-        <div>
-          <h3 class="cs-h3">What I built</h3>
-          <p>An agent that <strong>answers only when three separate checks agree it should</strong>. Otherwise it opens a ticket for a human advisor. The advisor's reply goes back into the student's conversation, and the advisor can choose to add it to the knowledge base so the same question is answered automatically next time. The whole thing ships as a monitored, tested service.</p>
-        </div>
-      </div>
-
-      <!-- Architecture -->
-      <div class="cs-diagrams">
-        <figure class="flow" aria-label="How the agent handles a question">
-          <figcaption>1 · How the agent handles a question</figcaption>
-          <ol class="flow-steps">
-            <li><span class="n">1</span><div><b>Retrieve</b><small>pgvector search, filtered by the student's department, handbook first</small></div></li>
-            <li class="gate"><span class="n">G1</span><div><b>Context relevance</b><small>checked before generating: do the excerpts cover the question at all?</small></div></li>
-            <li><span class="n">2</span><div><b>Generate</b><small>an answer built only from the retrieved excerpts</small></div></li>
-            <li class="gate"><span class="n">G2</span><div><b>Faithfulness + answer relevance</b><small>run in parallel: is every claim supported, and does it answer the question asked?</small></div></li>
-            <li class="ok"><span class="n">✓</span><div><b>Answer the student</b><small>only when every gate passes</small></div></li>
-          </ol>
-          <div class="flow-branch">
-            <span class="arrow" aria-hidden="true">↳</span>
-            <div><b>Any gate fails → escalate</b><small>Write a ticket with the question, the gate that failed and why, and the excerpts the bot saw. Then the run ends.</small></div>
+      <article class="feature">
+        <div class="feature-head">
+          <div class="feature-tags">
+            <span class="pill pill-accent">LLM · RAG · HUMAN-IN-THE-LOOP</span>
+            <a class="ci" href="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml" target="_blank" rel="noopener"><img src="https://github.com/OmarAmir2001/Customer_Support/actions/workflows/ci.yml/badge.svg" alt="CI status" loading="lazy" height="20"></a>
           </div>
-        </figure>
+          <h3>Handbook Assistant <span class="sub">A customer support agent that knows when to ask a human</span></h3>
+          <p class="lead">A support agent for a computer science institute. It answers student questions from the CS and IS handbooks, and when it can't answer confidently it <strong>opens a ticket for a human advisor instead of guessing</strong>. When the advisor replies, the answer goes back into the student's conversation, and the advisor can add it to the knowledge base so the same question is answered automatically next time.</p>
 
-        <figure class="flow" aria-label="Ticket lifecycle">
-          <figcaption>2 · What happens after escalation (hours or days later)</figcaption>
-          <ol class="lifecycle">
-            <li><span class="state s-pending">pending</span><small>waiting in the advisor queue</small></li>
-            <li><span class="state s-review">under_review</span><small>an advisor claims it, or releases it back</small></li>
-            <li><span class="state s-ok">resolved</span><small>the answer goes back into the student's conversation by <code>thread_id</code></small></li>
-            <li><span class="state s-kb">+ promote_to_kb</span><small>optional: the advisor adds the answer to pgvector as <code>instructor_resolved</code></small></li>
-          </ol>
-          <p class="lifecycle-note">Also <span class="state s-mute">rejected</span> <span class="state s-mute">closed</span> <span class="state s-mute">reopened</span>. Every change is logged with who made it. If two advisors act at once, the second gets a <code>409</code> instead of silently overwriting the first.</p>
-        </figure>
-      </div>
-
-      <!-- Decisions -->
-      <h3 class="cs-h3 cs-sub">Key design decisions</h3>
-      <div class="decisions">
-        <article class="decision">
-          <span class="d-num">01</span>
-          <h4>Separate judges, not a confidence score</h4>
-          <p>Models are poorly calibrated when asked to "rate your confidence from 0 to 1." Instead, three single-purpose judges each check something different against different evidence. The answer-relevance judge is deliberately <em>not shown</em> the excerpts, so it can catch an answer that is well grounded but answers the wrong question.</p>
-        </article>
-        <article class="decision">
-          <span class="d-num">02</span>
-          <h4>Judges fail closed</h4>
-          <p>If a judge returns output it can't parse, or can't be reached, the question escalates. A judge that failed open would let answers through exactly when the checking system is broken.</p>
-        </article>
-        <article class="decision">
-          <span class="d-num">03</span>
-          <h4>Escalation ends the run</h4>
-          <p>Nothing stays paused in memory waiting for a human who might take days. An open ticket is just a database row, so it survives restarts and scales. The advisor's reply is written back into the saved conversation, and the student sees it on their next visit.</p>
-        </article>
-        <article class="decision">
-          <span class="d-num">04</span>
-          <h4>The advisor decides what the agent learns</h4>
-          <p>Resolving a ticket and adding its answer to the knowledge base are two separate steps. One judge suggests whether the answer is general enough to reuse, and another holds back any answer that contradicts the handbook. Handbook text always ranks above advisor answers at retrieval.</p>
-        </article>
-        <article class="decision">
-          <span class="d-num">05</span>
-          <h4>One source of truth</h4>
-          <p>Postgres holds tickets, chunks and conversation history. The pgvector index is rebuilt from it and can be dropped and pushed again without losing anything. Every sync deletes and re-inserts by a stable key, so running it twice never creates duplicates.</p>
-        </article>
-        <article class="decision">
-          <span class="d-num">06</span>
-          <h4>Thin graph nodes, logic in controllers</h4>
-          <p>Each LangGraph node reads the state, calls one controller method and writes the result back. The advisor's HTTP endpoint calls the same controller as the graph, and all 115 tests run without a database, API keys or the graph.</p>
-        </article>
-      </div>
-
-      <!-- Production -->
-      <div class="prod">
-        <div class="prod-text">
-          <h3 class="cs-h3">Built to run in production</h3>
-          <p>The most dangerous failure in this system doesn't show up in HTTP metrics. If the model provider slows down or fails, the judges fail closed and <strong>every question escalates, while <code>/chat</code> still returns 200 with normal latency</strong>. A dashboard of requests and errors would look perfectly healthy.</p>
-          <p>So I added metrics specific to this system. <code>judge_failures_total{gate}</code> is the only signal that separates "the provider is down" from "retrieval is bad," two problems that need opposite fixes.</p>
+          <div class="pipeline" aria-label="Pipeline">
+            <span class="step">retrieve</span><span class="arr">→</span>
+            <span class="step step-gate">gate: context</span><span class="arr">→</span>
+            <span class="step">generate</span><span class="arr">→</span>
+            <span class="step step-gate">gate: faithful ∥ relevant</span><span class="arr">→</span>
+            <span class="step step-ok">answer</span>
+            <span class="step step-esc">↳ else escalate</span>
+          </div>
         </div>
-        <ul class="prod-list">
-          <li><b>Observability</b><span>Prometheus and Grafana, 7 alert rules checked with <code>promtool</code>, metrics labelled by route template so the number of series stays bounded, and structlog JSON logs with a correlation ID for each conversation</span></li>
-          <li><b>Infrastructure</b><span>Docker Compose with one command (<code>make up</code>), nginx as the only public port, Alembic migrations that run on startup, and memory limits on every service</span></li>
-          <li><b>Correctness</b><span>A ticket state machine with an audit trail, optimistic locking that returns a 409 on conflict, and idempotent syncing to the vector index</span></li>
-          <li><b>Testing</b><span>115 tests in GitHub Actions, plus Locust load profiles</span></li>
-        </ul>
-      </div>
 
-      <ul class="tags cs-tags" aria-label="Technologies">
-        <li>LangGraph</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>Pydantic v2</li><li>Groq · gpt-oss</li><li>Cohere embeddings</li><li>Prometheus</li><li>Grafana</li><li>nginx</li><li>Docker Compose</li><li>structlog</li><li>pytest</li><li>Locust</li><li>uv</li>
-      </ul>
-    </div>
-  </section>
+        <div class="cs-intro">
+          <div>
+            <h4>The problem</h4>
+            <p>Students ask about registration, GPA rules and graduation requirements, and the answers are in two long handbooks, partly in Arabic. A normal RAG chatbot answers every question with the same confidence, even when retrieval found nothing useful. On academic rules, <strong>a confident wrong answer does more harm than "let me ask an advisor."</strong></p>
+          </div>
+          <div>
+            <h4>What I built</h4>
+            <p>An agent that <strong>answers only when three separate checks agree it should</strong>, backed by a ticket system that survives restarts, a learning loop where the advisor decides what gets added, and the monitoring to run it all in production.</p>
+          </div>
+        </div>
 
-  <!-- OTHER WORK -->
-  <section class="section section-alt" id="work" aria-labelledby="work-h">
-    <div class="wrap">
-      <header class="section-head">
-        <p class="kicker">02 · More work</p>
-        <h2 id="work-h">Other projects</h2>
-      </header>
+        <div class="cs-diagrams">
+          <figure class="panel" aria-label="How the agent handles a question">
+            <figcaption>How the agent handles a question</figcaption>
+            <ol class="flow-steps">
+              <li><span class="n">1</span><div><b>Retrieve</b><small>pgvector search, filtered by the student's department, handbook first</small></div></li>
+              <li class="gate"><span class="n">G1</span><div><b>Context relevance</b><small>checked before generating: do the excerpts cover the question at all?</small></div></li>
+              <li><span class="n">2</span><div><b>Generate</b><small>an answer built only from the retrieved excerpts</small></div></li>
+              <li class="gate"><span class="n">G2</span><div><b>Faithfulness + answer relevance</b><small>run in parallel: is every claim supported, and does it answer the question asked?</small></div></li>
+              <li class="ok"><span class="n">✓</span><div><b>Answer the student</b><small>only when every gate passes</small></div></li>
+            </ol>
+            <div class="flow-branch">
+              <span class="arrow" aria-hidden="true">↳</span>
+              <div><b>Any gate fails → escalate</b><small>Write a ticket with the question, the gate that failed and why, and the excerpts the bot saw. Then the run ends.</small></div>
+            </div>
+          </figure>
 
-      <article class="project">
-        <div class="project-main">
-          <div class="project-top"><span class="badge badge-demo">Live demo</span></div>
-          <h3>Mizan <span class="ar" lang="ar">ميزان</span> <span class="sub">Egyptian labor law assistant</span></h3>
-          <p class="summary">An agentic RAG assistant that answers questions about Egyptian labor law in <strong>Arabic and English</strong>. It is built as a stateful LangGraph graph, answers are grounded in the labor law text, and Groq-hosted Llama 3.3 70B keeps responses fast.</p>
-          <ul class="points">
-            <li><strong>Corrective RAG loop.</strong> It grades each retrieved passage, and when the results are weak it rewrites the question into more precise legal wording and searches again.</li>
-            <li><strong>Memory for each user.</strong> Trustcall saves each user's details across sessions, so answers stay personalized.</li>
-            <li><strong>Deployed.</strong> An interactive Gradio app on Hugging Face Spaces.</li>
+          <figure class="panel" aria-label="Ticket lifecycle">
+            <figcaption>After escalation (hours or days later)</figcaption>
+            <ol class="lifecycle">
+              <li><span class="state s-pending">pending</span><small>waiting in the advisor queue</small></li>
+              <li><span class="state s-review">under_review</span><small>an advisor claims it, or releases it back</small></li>
+              <li><span class="state s-ok">resolved</span><small>the answer goes back into the student's conversation by <code>thread_id</code></small></li>
+              <li><span class="state s-kb">+ promote_to_kb</span><small>optional: the advisor adds the answer to pgvector as <code>instructor_resolved</code></small></li>
+            </ol>
+            <p class="lifecycle-note">Also <span class="state s-mute">rejected</span> <span class="state s-mute">closed</span> <span class="state s-mute">reopened</span>. Every change is logged with who made it. If two advisors act at once, the second gets a <code>409</code> instead of silently overwriting the first.</p>
+          </figure>
+        </div>
+
+        <h4 class="decisions-title">Key design decisions</h4>
+        <div class="decisions">
+          <article class="decision">
+            <span class="d-num">01</span>
+            <h5>Separate judges, not a confidence score</h5>
+            <p>Models are poorly calibrated when asked to rate their own confidence. Instead, three single-purpose judges each check something different against different evidence. The answer-relevance judge is deliberately <em>not shown</em> the excerpts, so it can catch an answer that is well grounded but answers the wrong question.</p>
+          </article>
+          <article class="decision">
+            <span class="d-num">02</span>
+            <h5>Judges fail closed</h5>
+            <p>If a judge returns output it can't parse, or can't be reached, the question escalates. A judge that failed open would let answers through exactly when the checking system is broken.</p>
+          </article>
+          <article class="decision">
+            <span class="d-num">03</span>
+            <h5>Escalation ends the run</h5>
+            <p>Nothing stays paused in memory waiting for a human who might take days. An open ticket is just a database row, so it survives restarts and scales. The student sees the advisor's reply on their next visit.</p>
+          </article>
+          <article class="decision">
+            <span class="d-num">04</span>
+            <h5>The advisor decides what the agent learns</h5>
+            <p>Resolving a ticket and adding its answer to the knowledge base are separate steps. One judge suggests whether the answer is general enough to reuse, and another holds back any answer that contradicts the handbook. Handbook text always ranks first.</p>
+          </article>
+          <article class="decision">
+            <span class="d-num">05</span>
+            <h5>One source of truth</h5>
+            <p>Postgres holds tickets, chunks and conversation history. The pgvector index is rebuilt from it and can be dropped and pushed again without losing anything. Syncing deletes and re-inserts by a stable key, so it never creates duplicates.</p>
+          </article>
+          <article class="decision">
+            <span class="d-num">06</span>
+            <h5>Thin nodes, logic in controllers</h5>
+            <p>Each LangGraph node calls one controller method. The advisor's HTTP endpoint calls the same controller as the graph, and all 115 tests run without a database, API keys or the graph.</p>
+          </article>
+        </div>
+
+        <div class="prod">
+          <div class="prod-text">
+            <h4>Built to run in production</h4>
+            <p>The most dangerous failure in this system doesn't show up in HTTP metrics. If the model provider slows down or fails, the judges fail closed and <strong>every question escalates, while <code>/chat</code> still returns 200 with normal latency</strong>.</p>
+            <p>So I added metrics specific to this system. <code>judge_failures_total{gate}</code> is the only signal that separates "the provider is down" from "retrieval is bad," two problems that need opposite fixes.</p>
+          </div>
+          <ul class="prod-list">
+            <li><b>Observability</b><span>Prometheus and Grafana, 7 alert rules checked with <code>promtool</code>, metrics labelled by route template so the number of series stays bounded, and JSON logs with a correlation ID for each conversation</span></li>
+            <li><b>Infrastructure</b><span>Docker Compose with one command (<code>make up</code>), nginx as the only public port, Alembic migrations on startup, and memory limits on every service</span></li>
+            <li><b>Correctness</b><span>A ticket state machine with an audit trail, optimistic locking that returns a 409 on conflict, and idempotent syncing to the vector index</span></li>
+            <li><b>Testing</b><span>115 tests in GitHub Actions, plus Locust load profiles</span></li>
           </ul>
-          <ul class="tags" aria-label="Technologies">
-            <li>LangGraph</li><li>ChromaDB</li><li>Llama 3.3 70B · Groq</li><li>multilingual-e5</li><li>Trustcall</li><li>Gradio</li>
-          </ul>
-          <div class="links">
-            <a class="btn btn-primary btn-sm" href="https://huggingface.co/spaces/OmarAmir2001/mizan" target="_blank" rel="noopener">Try the live demo</a>
-            <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/mizan" target="_blank" rel="noopener">Source</a>
-          </div>
         </div>
-        <figure class="flow" aria-label="Mizan's corrective RAG loop">
-          <figcaption>Corrective RAG loop</figcaption>
-          <ol class="flow-steps">
-            <li><span class="n">1</span><div><b>Load profile</b><small>the user's saved memory</small></div></li>
-            <li><span class="n">2</span><div><b>Retrieve</b><small>ChromaDB</small></div></li>
-            <li class="gate"><span class="n">3</span><div><b>Grade passages</b><small>is each one relevant?</small></div></li>
-            <li><span class="n">4</span><div><b>Generate</b><small>personalized answer</small></div></li>
-            <li class="ok"><span class="n">✓</span><div><b>Save profile</b><small>Trustcall updates memory</small></div></li>
-          </ol>
-          <div class="flow-branch">
-            <span class="arrow" aria-hidden="true">↺</span>
-            <div><b>Weak results → rewrite query</b><small>and search again</small></div>
-          </div>
-        </figure>
+
+        <div class="feature-foot">
+          <ul class="chips" aria-label="Technologies">
+            <li>LangGraph</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>Pydantic v2</li><li>Groq · gpt-oss</li><li>Cohere</li><li>Prometheus</li><li>Grafana</li><li>nginx</li><li>Docker</li><li>pytest</li><li>uv</li>
+          </ul>
+          <a class="btn btn-primary" href="https://github.com/OmarAmir2001/Customer_Support" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" class="gh"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>View code</a>
+        </div>
       </article>
-
-      <div class="mini-grid">
-        <article class="mini">
-          <span class="badge">Graduation project · Published</span>
-          <h3>Visioneer</h3>
-          <p>I fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans, using structured prompt templates, and shipped it in an Android app that generates floor plan designs. The work became a peer-reviewed paper.</p>
-          <ul class="tags"><li>Stable Diffusion</li><li>PyTorch</li><li>Android</li></ul>
-          <div class="mini-links">
-            <a href="https://github.com/OmarAmir2001/VISIONEER_APP" target="_blank" rel="noopener">Source →</a>
-            <a href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Paper →</a>
-          </div>
-        </article>
-        <article class="mini">
-          <span class="badge">LLM pipeline</span>
-          <h3>GitHub Repository Q&amp;A Agent</h3>
-          <p>A complete LLM pipeline (ingestion, retrieval and deployment) that answers questions about a code repository. It runs behind a REST API with responses under 200 ms and is containerized with Docker.</p>
-          <ul class="tags"><li>LangChain</li><li>Docker</li><li>REST API</li></ul>
-          <div class="mini-links"><a href="https://github.com/OmarAmir2001/GitHub-Repository-Q-A-Agent" target="_blank" rel="noopener">Source →</a></div>
-        </article>
-        <article class="mini">
-          <span class="badge">Classical ML</span>
-          <h3>Reservation Cancellation Prediction</h3>
-          <p>A supervised model trained on more than 10,000 records that reaches 85% accuracy. Feature engineering and hyperparameter tuning improved its F1 score by 12%.</p>
-          <ul class="tags"><li>scikit-learn</li><li>Feature engineering</li></ul>
-          <div class="mini-links"><a href="https://github.com/OmarAmir2001/reservation-cancellation-prediction" target="_blank" rel="noopener">Source →</a></div>
-        </article>
-      </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE & PUBLICATION -->
-  <section class="section" id="experience" aria-labelledby="exp-h">
+  <!-- PROJECTS -->
+  <section class="section" id="projects" aria-labelledby="proj-h">
     <div class="wrap">
-      <header class="section-head">
-        <p class="kicker">03 · Experience</p>
-        <h2 id="exp-h">Experience &amp; research</h2>
-      </header>
-      <div class="exp-grid">
-        <article class="exp">
-          <div class="exp-head">
-            <h3>Teaching Assistant, Faculty of Computer Science</h3>
-            <span class="exp-date">2025 – Present</span>
+      <h2 class="sec-title" id="proj-h"><span class="sec-num">03</span>More projects</h2>
+
+      <div class="cards">
+        <article class="card card-wide">
+          <span class="pill">LLM · RAG · ARABIC NLP</span>
+          <h3>Mizan <span class="ar" lang="ar">ميزان</span></h3>
+          <p>An agentic RAG assistant that answers questions about Egyptian labor law in <strong>Arabic and English</strong>. It is built as a stateful LangGraph graph: it grades what it retrieves, and when the results are weak it rewrites the question into more precise legal wording and searches again. Trustcall remembers each user across sessions, and Groq-hosted Llama 3.3 70B keeps answers fast.</p>
+          <div class="pipeline pipeline-sm" aria-label="Pipeline">
+            <span class="step">load profile</span><span class="arr">→</span>
+            <span class="step">retrieve</span><span class="arr">→</span>
+            <span class="step step-gate">grade</span><span class="arr">→</span>
+            <span class="step">generate</span><span class="arr">→</span>
+            <span class="step">save profile</span>
+            <span class="step step-esc">↺ rewrite if weak</span>
           </div>
-          <p class="exp-org">Culture and Science City, Egypt</p>
-          <ul class="points">
-            <li>Mentored <strong>more than 100 students</strong> in Machine Learning, Algorithms and Data Structures. Hands-on projects raised assignment completion rates by about 20%.</li>
-            <li>Guided students building ML models in Python with TensorFlow, PyTorch and scikit-learn, from preprocessing through training and evaluation.</li>
-          </ul>
+          <ul class="chips"><li>LangGraph</li><li>ChromaDB</li><li>Llama 3.3 70B · Groq</li><li>multilingual-e5</li><li>Trustcall</li><li>Gradio</li></ul>
+          <div class="card-links">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/mizan" target="_blank" rel="noopener">Code</a>
+            <a class="btn btn-primary btn-sm" href="https://huggingface.co/spaces/OmarAmir2001/mizan" target="_blank" rel="noopener">Live demo ↗</a>
+          </div>
         </article>
-        <article class="exp">
-          <div class="exp-head">
-            <h3>Peer-reviewed publication</h3>
-            <span class="exp-date">2025</span>
+
+        <article class="card">
+          <span class="pill">GENERATIVE VISION · PUBLISHED</span>
+          <h3>Visioneer</h3>
+          <p>My graduation project. I fine-tuned Stable Diffusion v1.5 on <strong>more than 12,000 floor plans</strong>, using structured prompt templates, and shipped it in an Android app that generates floor plan designs. The work became a peer-reviewed paper.</p>
+          <div class="mini-stats">
+            <div><b>12k+</b><span>training samples</span></div>
+            <div><b>SD 1.5</b><span>base model</span></div>
           </div>
-          <p class="exp-org"><i>Machine Graphics &amp; Vision</i>, vol. 34, no. 3</p>
-          <p class="pub-title">"Fine-tuning Stable Diffusion for generating 2D floor plans using prompt templates"</p>
-          <p class="pub-authors">A. Mostafa, <b>O. Amir</b>, A. M. Mohamed, M. O. Al Enany</p>
-          <a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">doi.org/10.22630/MGV.2025.34.3.4</a>
+          <ul class="chips"><li>Stable Diffusion</li><li>PyTorch</li><li>Android</li></ul>
+          <div class="card-links">
+            <a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/VISIONEER_APP" target="_blank" rel="noopener">Code</a>
+            <a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Paper ↗</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <span class="pill">LLM PIPELINE</span>
+          <h3>GitHub Repository Q&amp;A Agent</h3>
+          <p>A complete LLM pipeline (ingestion, retrieval and deployment) that answers questions about a code repository. It runs behind a REST API and is containerized with Docker.</p>
+          <div class="mini-stats">
+            <div><b>&lt;200 ms</b><span>API responses</span></div>
+            <div><b>Docker</b><span>reproducible</span></div>
+          </div>
+          <ul class="chips"><li>LangChain</li><li>Docker</li><li>REST API</li></ul>
+          <div class="card-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/GitHub-Repository-Q-A-Agent" target="_blank" rel="noopener">Code</a></div>
+        </article>
+
+        <article class="card">
+          <span class="pill">CLASSICAL ML</span>
+          <h3>Reservation Cancellation Prediction</h3>
+          <p>A supervised model trained on more than 10,000 records to predict booking cancellations. Feature engineering and hyperparameter tuning improved its results.</p>
+          <div class="mini-stats">
+            <div><b>85%</b><span>accuracy</span></div>
+            <div><b>+12%</b><span>F1 from tuning</span></div>
+          </div>
+          <ul class="chips"><li>scikit-learn</li><li>Feature engineering</li></ul>
+          <div class="card-links"><a class="btn btn-ghost btn-sm" href="https://github.com/OmarAmir2001/reservation-cancellation-prediction" target="_blank" rel="noopener">Code</a></div>
         </article>
       </div>
     </div>
   </section>
 
   <!-- SKILLS -->
-  <section class="section section-alt" id="skills" aria-labelledby="skills-h">
+  <section class="section" id="skills" aria-labelledby="skills-h">
     <div class="wrap">
-      <header class="section-head">
-        <p class="kicker">04 · Toolbox</p>
-        <h2 id="skills-h">Skills</h2>
-      </header>
+      <h2 class="sec-title" id="skills-h"><span class="sec-num">04</span>Skills</h2>
       <div class="skills">
-        <div class="skill">
-          <h3>LLM &amp; GenAI</h3>
-          <ul class="tags"><li>RAG / CRAG</li><li>LangGraph</li><li>LangChain</li><li>Agentic workflows</li><li>LLM-as-judge</li><li>Human-in-the-loop</li><li>Long-term memory (Trustcall)</li><li>Prompt engineering</li><li>LLM evaluation</li></ul>
-        </div>
-        <div class="skill">
-          <h3>Vector search &amp; NLP</h3>
-          <ul class="tags"><li>pgvector</li><li>Qdrant</li><li>ChromaDB</li><li>Pinecone</li><li>Embeddings</li><li>Semantic chunking</li><li>Hugging Face</li><li>NLTK</li><li>Arabic &amp; English NLP</li></ul>
-        </div>
-        <div class="skill">
-          <h3>Backend</h3>
-          <ul class="tags"><li>Python</li><li>FastAPI</li><li>Pydantic v2</li><li>PostgreSQL</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>MongoDB / Motor</li><li>REST APIs</li><li>Clean architecture</li></ul>
-        </div>
-        <div class="skill">
-          <h3>MLOps &amp; infrastructure</h3>
-          <ul class="tags"><li>Docker Compose</li><li>nginx</li><li>Prometheus</li><li>Grafana</li><li>structlog</li><li>GitHub Actions</li><li>pytest</li><li>Locust</li><li>uv</li></ul>
-        </div>
-        <div class="skill">
-          <h3>Models &amp; ML</h3>
-          <ul class="tags"><li>Groq (Llama 3.3 70B, gpt-oss)</li><li>OpenAI-compatible APIs</li><li>Stable Diffusion fine-tuning</li><li>PyTorch</li><li>TensorFlow</li><li>scikit-learn</li><li>NumPy</li><li>Pandas</li><li>Gradio</li></ul>
-        </div>
+        <div class="skill"><h3><span>01</span>LLM &amp; GenAI</h3><ul class="chips"><li>RAG / CRAG</li><li>LangGraph</li><li>LangChain</li><li>Agentic workflows</li><li>LLM-as-judge</li><li>Human-in-the-loop</li><li>Trustcall memory</li><li>Prompt engineering</li><li>LLM evaluation</li></ul></div>
+        <div class="skill"><h3><span>02</span>Vector search &amp; NLP</h3><ul class="chips"><li>pgvector</li><li>Qdrant</li><li>ChromaDB</li><li>Pinecone</li><li>Embeddings</li><li>Semantic chunking</li><li>Hugging Face</li><li>NLTK</li><li>Arabic &amp; English NLP</li></ul></div>
+        <div class="skill"><h3><span>03</span>Backend</h3><ul class="chips"><li>Python</li><li>FastAPI</li><li>Pydantic v2</li><li>PostgreSQL</li><li>SQLAlchemy 2 async</li><li>Alembic</li><li>MongoDB / Motor</li><li>REST APIs</li><li>Clean architecture</li></ul></div>
+        <div class="skill"><h3><span>04</span>MLOps &amp; infra</h3><ul class="chips"><li>Docker Compose</li><li>nginx</li><li>Prometheus</li><li>Grafana</li><li>structlog</li><li>GitHub Actions</li><li>pytest</li><li>Locust</li><li>uv</li></ul></div>
+        <div class="skill"><h3><span>05</span>Models &amp; ML</h3><ul class="chips"><li>Groq · Llama 3.3 / gpt-oss</li><li>OpenAI-compatible APIs</li><li>Stable Diffusion FT</li><li>PyTorch</li><li>TensorFlow</li><li>scikit-learn</li><li>NumPy</li><li>Pandas</li><li>Gradio</li></ul></div>
+        <div class="skill"><h3><span>06</span>Languages</h3><ul class="chips"><li>Arabic · native</li><li>English · IELTS 8.0</li><li>German · professional</li></ul></div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section class="section" id="about" aria-labelledby="about-h">
-    <div class="wrap about">
-      <header class="section-head">
-        <p class="kicker">05 · Background</p>
-        <h2 id="about-h">About</h2>
-      </header>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>I'm an AI and LLM engineer who likes owning a system from start to finish: ingestion and retrieval design, evaluation and escalation logic, and the deployment and monitoring that keep it working.</p>
-          <p>I care about decisions I can defend. That means one source of truth, judges that fail safe, metrics that show the system's own failure modes, and code I can test without starting the whole stack. Teaching has made me better at explaining those choices.</p>
-        </div>
-        <ul class="facts">
-          <li>
-            <span class="fact-label">Education</span>
-            <span><b>B.Sc. Computer Science, Excellence with Honors</b><br>Culture and Science City, Egypt · 2020–2024</span>
-          </li>
-          <li>
-            <span class="fact-label">Languages</span>
-            <span>English, full professional (IELTS 8.0) · Arabic, native · German, professional working</span>
-          </li>
-          <li>
-            <span class="fact-label">Courses</span>
-            <span>Deep Learning and Machine Learning Specializations (DeepLearning.AI / Stanford) · Mathematics for ML &amp; Data Science · Build Chat Applications with OpenAI &amp; LangChain · Vector Databases with Pinecone · Applied Text Mining in Python · LLM Zoomcamp (DataTalksClub)</span>
-          </li>
-        </ul>
-      </div>
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience" aria-labelledby="exp-h">
+    <div class="wrap">
+      <h2 class="sec-title" id="exp-h"><span class="sec-num">05</span>Experience &amp; Education</h2>
+      <ol class="timeline">
+        <li class="tl-item">
+          <span class="tl-date">2025 — Present</span>
+          <h3>Teaching Assistant</h3>
+          <p class="tl-org">Culture and Science City · Faculty of Computer Science</p>
+          <ul>
+            <li>Mentored more than 100 students in Machine Learning, Algorithms and Data Structures. Hands-on projects raised assignment completion rates by about 20%.</li>
+            <li>Guided students building ML models in Python with TensorFlow, PyTorch and scikit-learn, from preprocessing through training and evaluation.</li>
+          </ul>
+        </li>
+        <li class="tl-item">
+          <span class="tl-date">2023 — 2024</span>
+          <h3>Graduation Project: Visioneer</h3>
+          <p class="tl-org">Culture and Science City · with Ahmed Mostafa</p>
+          <ul>
+            <li>Fine-tuned Stable Diffusion v1.5 on more than 12,000 floor plans and shipped it in an Android app. Later published in <i>Machine Graphics &amp; Vision</i>.</li>
+          </ul>
+        </li>
+        <li class="tl-item">
+          <span class="tl-date">2020 — 2024</span>
+          <h3>B.Sc. Computer Science, Excellence with Honors</h3>
+          <p class="tl-org">Culture and Science City, Egypt</p>
+        </li>
+      </ol>
+
+      <h3 class="certs-title">Selected courses</h3>
+      <ul class="certs">
+        <li>Deep Learning Specialization <span>DeepLearning.AI</span></li>
+        <li>Machine Learning Specialization <span>Stanford · DeepLearning.AI</span></li>
+        <li>Mathematics for ML &amp; Data Science <span>DeepLearning.AI</span></li>
+        <li>Build Chat Applications with OpenAI &amp; LangChain</li>
+        <li>Vector Databases with Pinecone</li>
+        <li>Applied Text Mining in Python</li>
+        <li>LLM Zoomcamp <span>DataTalksClub</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="section" id="research" aria-labelledby="res-h">
+    <div class="wrap">
+      <h2 class="sec-title" id="res-h"><span class="sec-num">06</span>Research</h2>
+      <article class="paper">
+        <span class="pill pill-accent">PUBLISHED · MACHINE GRAPHICS &amp; VISION 2025</span>
+        <h3>Fine-tuning Stable Diffusion for Generating 2D Floor Plans Using Prompt Templates</h3>
+        <p class="pub-authors">A. Mostafa, <b>O. Amir</b>, A. M. Mohamed, M. O. Al Enany</p>
+        <p>We fine-tuned Stable Diffusion 1.5 on a custom floor plan dataset, using structured prompt templates to steer the model toward concise outputs that tolerate small errors. The paper also proposes combining diffusion models with graph neural networks, so that generated layouts respect how rooms connect to each other.</p>
+        <p class="pub-venue">Machine Graphics &amp; Vision, 34(3), 2025</p>
+        <a class="btn btn-ghost btn-sm" href="https://doi.org/10.22630/MGV.2025.34.3.4" target="_blank" rel="noopener">Read the paper ↗</a>
+      </article>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section class="section contact" id="contact" aria-labelledby="contact-h">
-    <div class="wrap contact-inner">
-      <p class="kicker">06 · Contact</p>
-      <h2 id="contact-h">Let's build something that works in production.</h2>
-      <p class="lede">The fastest way to reach me is by email or on LinkedIn.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="mailto:omaramir2001@gmail.com">omaramir2001@gmail.com</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/omaramir55" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/OmarAmir2001" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="https://huggingface.co/OmarAmir2001" target="_blank" rel="noopener">Hugging Face</a>
+  <section class="section" id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <h2 class="sec-title" id="contact-h"><span class="sec-num">07</span>Contact</h2>
+      <div class="contact-box">
+        <h3>Need an engineer who builds agents that work in production?</h3>
+        <p>I'm happy to talk about AI, LLM and RAG engineering roles. The fastest way to reach me is by email.</p>
+        <div class="contact-grid">
+          <a class="contact-card" href="mailto:omaramir2001@gmail.com"><span>Email</span><b>omaramir2001@gmail.com</b></a>
+          <a class="contact-card" href="https://www.linkedin.com/in/omaramir55" target="_blank" rel="noopener"><span>LinkedIn</span><b>omaramir55</b></a>
+          <a class="contact-card" href="https://github.com/OmarAmir2001" target="_blank" rel="noopener"><span>GitHub</span><b>OmarAmir2001</b></a>
+          <a class="contact-card" href="https://huggingface.co/OmarAmir2001" target="_blank" rel="noopener"><span>Hugging Face</span><b>OmarAmir2001</b></a>
+        </div>
+        <a class="btn btn-primary" href="assets/Omar_Amir_CV.pdf" download>Download CV ↓</a>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="footer">
-  <div class="wrap">© <span id="year">2026</span> Omar Amir · 6th of October, Giza, Egypt</div>
+  <div class="wrap"><span class="ps">omar@rag</span>:<span class="pp">~</span>$ echo "© <span id="year">2026</span> Omar Amir"</div>
 </footer>
 
 <script src="script.js"></script>
