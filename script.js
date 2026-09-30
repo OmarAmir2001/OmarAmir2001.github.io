@@ -64,273 +64,151 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  /* ---------- Pipeline player ----------
-     Steps through each project's pipeline, one stage at a time. */
-  var PROJECTS = [
+  /* ---------- Get to know me ----------
+     A few facets of who I am; cycles on its own until someone picks one. */
+  var FACETS = [
     {
-      "key": "handbook",
-      "tag": "LLM · RAG · Human-in-the-loop",
-      "name": "Handbook Assistant",
-      "sum": "Answers student questions from the handbooks, or hands them to a human advisor.",
-      "steps": [
-        [
-          "Retrieve",
-          "handbook excerpts via pgvector",
-          ""
-        ],
-        [
-          "Context check",
-          "do the excerpts cover the question?",
-          "gate"
-        ],
-        [
-          "Generate",
-          "an answer built only from the excerpts",
-          ""
-        ],
-        [
-          "Faithfulness + relevance",
-          "two judges, run in parallel",
-          "gate"
-        ],
-        [
-          "Answer or escalate",
-          "a ticket for an advisor if any check fails",
-          "ok"
-        ]
+      "tab": "Builder",
+      "title": "The builder",
+      "line": "I learn by building, and I don't stop at \"it runs.\" If I can't explain how it fails, I'm not done.",
+      "stat": [
+        "5",
+        "end-to-end projects"
       ],
-      "stats": [
-        [
-          "3",
-          "judge gates"
-        ],
-        [
-          "115",
-          "tests in CI"
-        ]
+      "tags": [
+        "LLM agents",
+        "NLP",
+        "Generative vision",
+        "Classical ML"
       ]
     },
     {
-      "key": "mizan",
-      "tag": "LLM · RAG · Arabic NLP",
-      "name": "Mizan",
-      "sum": "Egyptian labor law questions, answered in Arabic or English.",
-      "steps": [
-        [
-          "Load profile",
-          "what it remembers about the user",
-          ""
-        ],
-        [
-          "Retrieve",
-          "ChromaDB with multilingual-e5",
-          ""
-        ],
-        [
-          "Grade passages",
-          "rewrite the question and retry if weak",
-          "gate"
-        ],
-        [
-          "Generate",
-          "a personalized, grounded answer",
-          ""
-        ],
-        [
-          "Save profile",
-          "Trustcall updates the user's memory",
-          "ok"
-        ]
+      "tab": "Teacher",
+      "title": "The teacher",
+      "line": "I've been a teaching assistant since 2025. Explaining something to a room of students is how I find out whether I really understand it.",
+      "stat": [
+        "100+",
+        "students mentored"
       ],
-      "stats": [
-        [
-          "AR + EN",
-          "languages"
-        ],
-        [
-          "Live",
-          "on Hugging Face"
-        ]
+      "tags": [
+        "Machine Learning",
+        "Algorithms",
+        "Data Structures"
       ]
     },
     {
-      "key": "repo",
-      "tag": "LLM pipeline",
-      "name": "GitHub Repository Q&A",
-      "sum": "Ask questions about a codebase through a REST API.",
-      "steps": [
-        [
-          "Ingest",
-          "load the repository",
-          ""
-        ],
-        [
-          "Retrieve",
-          "find the code relevant to the question",
-          ""
-        ],
-        [
-          "Answer",
-          "an LLM response grounded in the repo",
-          ""
-        ],
-        [
-          "Serve",
-          "a REST API packaged with Docker",
-          "ok"
-        ]
+      "tab": "Researcher",
+      "title": "The researcher",
+      "line": "My graduation project turned into a peer-reviewed paper on teaching Stable Diffusion to draw floor plans.",
+      "stat": [
+        "1",
+        "published paper · MGV 2025"
       ],
-      "stats": [
-        [
-          "<200 ms",
-          "API responses"
-        ],
-        [
-          "Docker",
-          "reproducible"
-        ]
+      "tags": [
+        "Stable Diffusion",
+        "Prompt templates",
+        "Co-author"
       ]
     },
     {
-      "key": "visioneer",
-      "tag": "Generative vision · Published",
-      "name": "Visioneer",
-      "sum": "Floor plans generated from text prompts, inside an Android app.",
-      "steps": [
-        [
-          "Prompt template",
-          "a structured description of the layout",
-          ""
-        ],
-        [
-          "Fine-tuned SD 1.5",
-          "trained on 12,000+ floor plans",
-          ""
-        ],
-        [
-          "Floor plan",
-          "the generated layout",
-          ""
-        ],
-        [
-          "Android app",
-          "view and share the design",
-          "ok"
-        ]
+      "tab": "Learner",
+      "title": "The learner",
+      "line": "Math first, then machine learning, deep learning, NLP and LLM agents. I keep going back to the fundamentals.",
+      "stat": [
+        "30+",
+        "certificates earned"
       ],
-      "stats": [
-        [
-          "12k+",
-          "training samples"
-        ],
-        [
-          "1",
-          "published paper"
-        ]
+      "tags": [
+        "DeepLearning.AI",
+        "Stanford",
+        "LangChain Academy",
+        "DataTalks.Club"
       ]
     },
     {
-      "key": "bookings",
-      "tag": "Classical ML",
-      "name": "Reservation Cancellation",
-      "sum": "Predicts which reservations will be cancelled.",
-      "steps": [
-        [
-          "Features",
-          "engineered from 10,000+ records",
-          ""
-        ],
-        [
-          "Train",
-          "a supervised model",
-          ""
-        ],
-        [
-          "Tune",
-          "hyperparameters, +12% F1",
-          ""
-        ],
-        [
-          "Predict",
-          "85% accuracy",
-          "ok"
-        ]
+      "tab": "Languages",
+      "title": "Three languages",
+      "line": "Arabic at home, English at work, and German whenever I get the chance.",
+      "stat": [
+        "8.0",
+        "IELTS band score"
       ],
-      "stats": [
-        [
-          "85%",
-          "accuracy"
-        ],
-        [
-          "+12%",
-          "F1 from tuning"
-        ]
+      "tags": [
+        "عربي",
+        "English",
+        "Deutsch"
+      ]
+    },
+    {
+      "tab": "Off the clock",
+      "title": "Off the clock",
+      "line": "When I'm not building or teaching, you'll find me reading, listening to podcasts, or playing video games.",
+      "stat": [
+        "Giza",
+        "6th of October, Egypt"
+      ],
+      "tags": [
+        "Reading",
+        "Podcasts",
+        "Video games"
       ]
     }
   ];
+  var DWELL = 6000;
 
-  var tabs = Array.prototype.slice.call(document.querySelectorAll(".player-tabs [role=tab]"));
-  var tagEl = document.getElementById("pl-tag");
-  var nameEl = document.getElementById("pl-name");
-  var sumEl = document.getElementById("pl-sum");
-  var stepsEl = document.getElementById("pl-steps");
-  var statsEl = document.getElementById("pl-stats");
-  var linkEl = document.getElementById("pl-link");
-  var footEl = document.querySelector(".pl-foot");
-  var timers = [], cycle = null, userPicked = false, current = 0;
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".me-tabs [role=tab]"));
+  var screenEl = document.getElementById("me-screen");
+  var facetEl = document.getElementById("me-facet");
+  var lineEl = document.getElementById("me-line");
+  var statV = document.getElementById("me-stat-v");
+  var statL = document.getElementById("me-stat-l");
+  var tagsEl = document.getElementById("me-tags");
+  var progress = document.querySelector(".me-progress");
+  var timer = null, swapTimer = null, userPicked = false, current = 0;
 
-  function later(fn, ms) { timers.push(setTimeout(fn, reduceMotion ? 0 : ms)); }
-  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-
-  function el(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text != null) e.textContent = text;
-    return e;
+  function render(f) {
+    facetEl.textContent = f.title;
+    lineEl.textContent = f.line;
+    statV.textContent = f.stat[0];
+    statL.textContent = f.stat[1];
+    tagsEl.textContent = "";
+    f.tags.forEach(function (t) {
+      var li = document.createElement("li");
+      li.textContent = t;
+      if (/[\u0600-\u06FF]/.test(t)) { li.lang = "ar"; li.className = "ar"; }
+      tagsEl.appendChild(li);
+    });
   }
 
-  function show(idx) {
-    clearTimers();
+  function restartBar() {
+    if (reduceMotion || userPicked) { progress.classList.add("stopped"); return; }
+    progress.classList.remove("run");
+    void progress.offsetWidth; // restart the CSS transition
+    progress.style.setProperty("--me-dur", DWELL + "ms");
+    progress.classList.add("run");
+  }
+
+  function show(idx, animate) {
     current = idx;
-    var p = PROJECTS[idx];
     tabs.forEach(function (t, i) { t.setAttribute("aria-selected", String(i === idx)); t.tabIndex = i === idx ? 0 : -1; });
-    tagEl.textContent = p.tag;
-    nameEl.textContent = p.name;
-    sumEl.textContent = p.sum;
-    linkEl.setAttribute("href", "#proj-" + p.key);
-
-    stepsEl.textContent = "";
-    var items = p.steps.map(function (s) {
-      var li = el("li", "pl-step" + (s[2] ? " " + s[2] : ""));
-      var dot = el("span", "pl-dot"); dot.setAttribute("aria-hidden", "true");
-      var body = el("div");
-      body.appendChild(el("b", null, s[0]));
-      body.appendChild(el("small", null, s[1]));
-      li.appendChild(dot); li.appendChild(body);
-      stepsEl.appendChild(li);
-      return li;
-    });
-
-    statsEl.textContent = "";
-    p.stats.forEach(function (st) {
-      var d = el("div");
-      d.appendChild(el("b", null, st[0]));
-      d.appendChild(el("span", null, st[1]));
-      statsEl.appendChild(d);
-    });
-
-    footEl.classList.add("pending");
-    items.forEach(function (li, i) { later(function () { li.classList.add("on"); }, 350 + i * 520); });
-    later(function () { footEl.classList.remove("pending"); }, 350 + items.length * 520);
+    clearTimeout(swapTimer);
+    if (animate && !reduceMotion) {
+      screenEl.classList.add("swap");
+      swapTimer = setTimeout(function () { render(FACETS[idx]); screenEl.classList.remove("swap"); }, 220);
+    } else {
+      render(FACETS[idx]);
+    }
+    restartBar();
   }
 
-  function startCycle() {
-    if (reduceMotion || userPicked) return;
-    cycle = setInterval(function () { show((current + 1) % PROJECTS.length); }, 6500);
+  function schedule() {
+    clearTimeout(timer);
+    if (reduceMotion || userPicked || document.hidden) return;
+    timer = setTimeout(function () { show((current + 1) % FACETS.length, true); schedule(); }, DWELL);
   }
 
   tabs.forEach(function (t, i) {
-    t.addEventListener("click", function () { userPicked = true; clearInterval(cycle); show(i); });
+    t.addEventListener("click", function () { userPicked = true; clearTimeout(timer); show(i, true); });
     t.addEventListener("keydown", function (e) {
       var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
       if (!d) return;
@@ -340,25 +218,22 @@
     });
   });
 
-  // Reserve room for the tallest project so the hero doesn't jump between them.
-  var screenEl = document.getElementById("pl-screen");
+  // Reserve room for the tallest facet so the hero doesn't jump as they change.
   function reserveHeight() {
-    var showing = current, tallest = 0;
     screenEl.style.minHeight = "";
-    PROJECTS.forEach(function (p, i) {
-      show(i);
-      tallest = Math.max(tallest, screenEl.offsetHeight);
-    });
+    var tallest = 0;
+    FACETS.forEach(function (f) { render(f); tallest = Math.max(tallest, screenEl.offsetHeight); });
     screenEl.style.minHeight = tallest + "px";
-    show(showing);
+    render(FACETS[current]);
   }
 
   if (tabs.length) {
     reserveHeight();
     window.addEventListener("resize", reserveHeight);
-    startCycle();
+    show(0, false);
+    schedule();
     document.addEventListener("visibilitychange", function () {
-      if (document.hidden) clearInterval(cycle); else { clearInterval(cycle); startCycle(); }
+      if (document.hidden) clearTimeout(timer); else { restartBar(); schedule(); }
     });
   }
 

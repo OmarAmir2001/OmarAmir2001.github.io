@@ -84,28 +84,29 @@
         </div>
       </div>
 
-      <!-- Pipeline player: steps through each project's pipeline -->
-      <aside class="player" aria-label="Interactive: step through how each of my projects works">
-        <div class="player-head">
-          <span class="player-title"><svg class="player-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>Pipeline player</span>
-          <span class="player-note">5 projects</span>
-        </div>
-        <div class="player-tabs" role="tablist" aria-label="Projects">
-          <button role="tab" type="button" data-p="0" aria-selected="true" aria-controls="pl-screen">Handbook</button>
-          <button role="tab" type="button" data-p="1" aria-selected="false" aria-controls="pl-screen">Mizan</button>
-          <button role="tab" type="button" data-p="2" aria-selected="false" aria-controls="pl-screen">Repo Q&amp;A</button>
-          <button role="tab" type="button" data-p="3" aria-selected="false" aria-controls="pl-screen">Visioneer</button>
-          <button role="tab" type="button" data-p="4" aria-selected="false" aria-controls="pl-screen">Bookings</button>
-        </div>
-        <div class="player-screen" id="pl-screen" role="tabpanel" aria-live="polite">
-          <p class="pl-tag" id="pl-tag">LLM · RAG · Human-in-the-loop</p>
-          <h3 class="pl-name" id="pl-name">Handbook Assistant</h3>
-          <p class="pl-sum" id="pl-sum">Answers student questions from the handbooks, or hands them to a human advisor.</p>
-          <ol class="pl-steps" id="pl-steps"><li class="pl-step on"><span class="pl-dot" aria-hidden="true"></span><div><b>Retrieve</b><small>handbook excerpts via pgvector</small></div></li><li class="pl-step gate on"><span class="pl-dot" aria-hidden="true"></span><div><b>Context check</b><small>do the excerpts cover the question?</small></div></li><li class="pl-step on"><span class="pl-dot" aria-hidden="true"></span><div><b>Generate</b><small>an answer built only from the excerpts</small></div></li><li class="pl-step gate on"><span class="pl-dot" aria-hidden="true"></span><div><b>Faithfulness + relevance</b><small>two judges, run in parallel</small></div></li><li class="pl-step ok on"><span class="pl-dot" aria-hidden="true"></span><div><b>Answer or escalate</b><small>a ticket for an advisor if any check fails</small></div></li></ol>
-          <div class="pl-foot">
-            <div class="pl-stats" id="pl-stats"><div><b>3</b><span>judge gates</span></div><div><b>115</b><span>tests in CI</span></div></div>
-            <a class="pl-link" id="pl-link" href="#proj-handbook">View project ↓</a>
+      <!-- Get to know me: a few facets of who I am -->
+      <aside class="me" aria-label="Get to know me">
+        <div class="me-head">
+          <svg class="me-avatar" viewBox="0 0 34 34" aria-hidden="true"><circle class="lm-bg" cx="17" cy="17" r="17"/><circle class="lm-ring" cx="17" cy="17" r="8.5"/><circle class="lm-core" cx="17" cy="17" r="2"/><circle class="lm-node" cx="23" cy="11" r="3"/></svg>
+          <div>
+            <span class="me-title">Get to know me</span>
+            <span class="me-sub">Omar Amir · AI Engineer, Giza</span>
           </div>
+        </div>
+        <div class="me-tabs" role="tablist" aria-label="About me">
+          <button role="tab" type="button" data-f="0" aria-selected="true" aria-controls="me-screen">Builder</button>
+          <button role="tab" type="button" data-f="1" aria-selected="false" aria-controls="me-screen">Teacher</button>
+          <button role="tab" type="button" data-f="2" aria-selected="false" aria-controls="me-screen">Researcher</button>
+          <button role="tab" type="button" data-f="3" aria-selected="false" aria-controls="me-screen">Learner</button>
+          <button role="tab" type="button" data-f="4" aria-selected="false" aria-controls="me-screen">Languages</button>
+          <button role="tab" type="button" data-f="5" aria-selected="false" aria-controls="me-screen">Off the clock</button>
+        </div>
+        <div class="me-progress" aria-hidden="true"><span id="me-bar"></span></div>
+        <div class="me-screen" id="me-screen" role="tabpanel" aria-live="polite">
+          <h3 class="me-facet" id="me-facet">The builder</h3>
+          <p class="me-line" id="me-line">I learn by building, and I don't stop at &quot;it runs.&quot; If I can't explain how it fails, I'm not done.</p>
+          <div class="me-stat"><b id="me-stat-v">5</b><span id="me-stat-l">end-to-end projects</span></div>
+          <ul class="me-tags" id="me-tags"><li>LLM agents</li><li>NLP</li><li>Generative vision</li><li>Classical ML</li></ul>
         </div>
       </aside>
     </div>
