@@ -74,15 +74,13 @@ strong { font-weight: 600; color: var(--ink); }
 .logo { display: flex; align-items: center; gap: 10px; color: var(--ink); font-family: var(--serif); font-size: 19px; font-weight: 500; }
 .logo:hover { text-decoration: none; }
 .scale-mark { width: 26px; height: 26px; fill: none; stroke: var(--accent); stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
-.logo-mark {
-  position: relative; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
-  background: var(--accent); color: var(--accent-ink);
-  font-family: var(--arabic); font-size: 19px; font-weight: 600; line-height: 1; padding-bottom: 3px;
-}
-.logo-mark::after {
-  content: ""; position: absolute; top: 1px; right: 0; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--brass); border: 2px solid var(--bg);
-}
+.logo-mark { width: 34px; height: 34px; flex: none; }
+.logo-mark .lm-bg { fill: var(--accent); }
+.logo-mark .lm-ring { fill: none; stroke: var(--accent-ink); stroke-width: 2.4; }
+.logo-mark .lm-core { fill: var(--accent-ink); opacity: .6; }
+.logo-mark .lm-node { fill: var(--brass); transform-origin: 17px 17px; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.logo:hover .lm-node { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .logo-mark .lm-node { transition: none; } }
 .scale-mark.sm { width: 18px; height: 18px; stroke-width: 4; }
 #menu { margin-left: auto; }
 .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; margin: 0; padding: 0; }
