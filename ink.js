@@ -112,9 +112,9 @@
 
     ctx.lineWidth = 1.1;
     ctx.lineCap = "round";
-    ctx.strokeStyle = "rgba(" + colors.ink + ", 0.34)";
+    ctx.strokeStyle = "rgba(" + colors.ink + ", 0.26)";
     ctx.stroke(inkPath);
-    ctx.strokeStyle = "rgba(" + colors.brass + ", 0.42)";
+    ctx.strokeStyle = "rgba(" + colors.brass + ", 0.32)";
     ctx.stroke(brassPath);
 
     // Draw and age ripples.
